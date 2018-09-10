@@ -1,0 +1,2 @@
+# LINGI2145-2018-2019
+Material for the tutorials and for the project of LINGI2145 @ UCLouvain, Spring 2018. Students should create a private fork of this repository and pull instructions are they are published.
