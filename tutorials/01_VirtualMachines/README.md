@@ -2,18 +2,18 @@
 LINGI2145 Autumn, 2018 -- Etienne Rivière and Raziel Carvajal-Gómez
 
 # Objectives
-In this tutorial, you will learn how to deploy a virtual infrastructure with several virtual machines linked by a virtual network, on your own laptop. You will then deploy a representative application (web hosting service) on this virtual infrastructure. At the end of this tutorial you will have learnt how to:
+In this tutorial, you learn how to deploy a virtual infrastructure with several virtual machines linked by a virtual network, on your own laptop. You then deploy a representative application (web hosting service) on this virtual infrastructure. At the end of this tutorial you will learn how to:
 
-- deploy a couple of Virtual Machines (VMs);
-- create a network to let Virtual Machines (VM) communicate with each other;
-- let your host machine be part of a virtual network;
+- deploy Virtual Machines (VMs);
+- create a network to let VMs communicate with each other;
+- let your own laptop be part of a virtual network;
 - install and deploy a web hosting service.
 
 :warning: We do encourage you to follow the tutorial solo.
 
 :warning: As for all other tutorials and for the project in LINGI2145, this tutorial assumes you are using an operating system with a UNIX-like command line built-in, such as MacOS X or any flavor of GNU/Linux.
 
-:warning: This tutorial demands you to complete some exercises that are tagged with the symbol: :pencil2:.
+:warning: This tutorial demands you to complete some exercises that are tagged with the symbol: :pencil2:
 
 # Prerequisites
 We will use [VirtualBox](https://www.virtualbox.org/) to deploy the infrastructure. The installation files are available at:
@@ -21,42 +21,42 @@ We will use [VirtualBox](https://www.virtualbox.org/) to deploy the infrastructu
 - [GNU/Linux based host](https://www.virtualbox.org/wiki/Linux_Downloads) such as: Debian, Ubuntu, Fedora, others
 - [OS X](https://download.virtualbox.org/virtualbox/5.2.18/VirtualBox-5.2.18-124319-OSX.dmg)
 
-Install VirtualBox by following the instructions. Consult the [official documentation](https://www.virtualbox.org/manual/ch02.html) for more details or troubleshooting.
+Install VirtualBox by following those instructions. Consult the [official documentation](https://www.virtualbox.org/manual/ch02.html) for more details or troubleshooting.
 
-# Setting up one Virtual Machine
-Our goal is to deploy multiple VMs on the same host (your laptop). We will only access these VMs through the network. There is no need for a full desktop operating system with a GUI and many pre-installed software packages. We also want to limit the amount of resources (hard drive space, CPU, memory). VMs will host a minimalistic GNU/Linux OS with only the necessary software packages.
+# Create your first VM
+Our goal is to deploy multiple VMs on the same host (your laptop). We will only access these VMs through the network. There is no need for a full desktop operating system with a GUI and many pre-installed software packages. We also want to limit the amount of resources (hard drive space, CPU, memory). VMs will host a minimalistic GNU/Linux Operating System (OS) with only the necessary software packages.
 
-:warning: Considering that your local machine will host every VM we will create in this tutorial, the creation of minimal VMs avoids decreasing the performance of your system.
+:bulb: Considering that your local machine will host every VM we create in this tutorial, the creation of minimal VMs avoids decreasing the performance of your system.
 
 #### Setting up hard drive, CPU and memory
 VBoxManage is the command line interface of VirtualBox. While using the GUI might seem simpler at first, it is not possible to do so in scripts. Learning the CLI right from the start is therefore better. The CLI allows controlling all features of the virtualization engine. We will use some useful commands of this interface, find further details on [this link](https://www.virtualbox.org/manual/ch08.html).
 
-Open a console and set the variable `vm` to the name of our virtual machine as follows:
+Open a console and set the variable `vm` to the name of our virtual machine.
 
 `vm='Debian-based_VM'`
 
-We now need a virtual hard drive to install the GNU/Linux OS and its system libraries. Create a dynamic hard drive with a maximum capacity of ~3GB as follows:
+We now need a virtual hard drive to install the GNU/Linux OS and its system libraries. Create a dynamic hard drive with a maximum capacity of ~3GB.
 
 `VBoxManage createhd --filename ${vm}.vdi --size 3072`
 
-Then we register our VM and specify the type of Operating System (OS) with the command:
+Then we register our VM and specify the type of OS.
 
-`VBoxManage createvm --name ${vm} --ostype "Linux26" --register`
+`VBoxManage createvm --name ${vm} --ostype "Debian" --register`
 
-Add built-in controllers for our hard drive with these two commands:
+Add hard drive controllers.
 
 1. `VBoxManage storagectl ${vm} --name "SATA Controller" --add sata --controller IntelAHCI`
 1. `VBoxManage storageattach ${vm} --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium ${vm}.vdi`
 
-Additionally, we do require controllers of a DVD drive to boot our system from an ISO image. These controllers are added as follows:
+Additionally, we do require controllers of a DVD drive to boot our system from an ISO image.
 
 `VBoxManage storagectl ${vm} --name "IDE Controller" --add ide`
 
-Our VM will boot from a minimal ISO image of ~36MB that you can download clicking on [this link](http://ftp.nl.debian.org/debian/dists/stretch/main/installer-i386/current/images/netboot/mini.iso). We now attach the previously downloaded ISO image as follows:
+Our VM will boot from a minimal ISO image of ~36MB that you can download clicking on [this link](http://ftp.nl.debian.org/debian/dists/stretch/main/installer-i386/current/images/netboot/mini.iso). We now attach the previously downloaded ISO image.
 
 `VBoxManage storageattach ${vm} --storagectl "IDE Controller" --port 0 --device 0 --type dvddrive --medium /REPLACE/WITH/PATH/TO/mini.iso`
 
-The following command specifies the boot order for the VM. First, the virtual machine manager will use the DVD virtual device (if attached), and then the hard drive if no DVD is present, as we would do for installing Linux on a physical PC:
+The following command specifies the boot order for the VM. First, the virtual machine manager will use the DVD virtual device (if attached), and then the hard drive if no DVD is present, as we would do for installing GNU/Linux on a physical PC.
 
 `VBoxManage modifyvm ${vm} --boot1 dvd --boot2 disk`
 
@@ -64,163 +64,177 @@ Finally, we will set to 512~MB the amount of memory that our VM requires with:
 
 `VBoxManage modifyvm ${vm} --memory 512 --vram 128`
 
-
 #### Starting a VM
-You are now ready to start a VM and then complete the installation procedure of your new operating system with the following command:
+You are now ready to launch a VM with: `VBoxManage startvm ${vm}`.
 
-`VBoxManage startvm ${vm}`
+**Automating the installation of your new OS.** VirtualBox pops up a new console as it is shown in the picture below.
 
-:warning: The installation procedure is pretty straightforward. Do not hesitate to ask for help if required.
+![vbox_console](vbox_console.png)
 
-:warning: When you reach the part to create users set the **administrator's password** as **root**.
+The VM boots from the DVD device as we indicate before. To automate the installation procedure, we make use of a feature that sets each step of the installation with a list of predefined values; this automatic procedure is called [preseeding](https://www.debian.org/releases/stable/i386/apb.html.en). Chose the option *Advanced options -> Automated install*, you will see the next screen.
 
-**Detaching the DVD device.** Once you complete the installation of your new operating system, you will be back to the first step of the installation. **This is normal** because VirtualBox still considers the DVD as the primary boot device, and reboots from it, relaunching the installation procedure. We need to detach the DVD device to boot using the virtual disk. To do so, first stop the VM with `VBoxManage controlvm ${vm} poweroff` and then detach the device using the following command:
+![preconfig_file](preconfig_file.png)
 
-`VBoxManage storageattach ${vm} --storagectl "IDE Controller" --port 0 --device 0 --type dvddrive --medium none`
+You are provided with the configuration file, simply, fill the text box with this URL `https://tinyurl.com/ybv4r2fh` and press `Continue`. This configuration file contains, for instance, the credentials of users. The administrator's authentication information is as follows: `user/password = root/root`.
 
-Now you can start your VM again and login using the **administrator's credentials**. Make look your terminal even cooler changing the administrator's profile via this command:
+**Booting from virtual disk.** Once the installation is complete, you will go back to the first step of the installation. **This is normal** because VirtualBox still considers the DVD as the primary boot device, and reboots from it, relaunching the installation procedure. We need to detach the DVD device to boot using the virtual disk. To do so, stop the VM with `VBoxManage controlvm ${vm} poweroff` and then select the virtual disk as primary device to boot with  `VBoxManage modifyvm ${vm} --boot1 disk`.
 
-`wget -O .bashrc https://tinyurl.com/ycv7e9ek && source .bashrc`
+Start the VM again and log in using the **administrator's credentials**.
 
-Power-off the VM via the command: `shutdown -h now`.
+:pencil2: Change the appearance of your new terminal with `wget -O .bashrc https://tinyurl.com/ycv7e9ek && source .bashrc`
+
+Power-off the VM via the command `shutdown -h now`; alternatively, you may also turn-off a virtual machine from a terminal of your laptop with `VBoxManage controlvm <name-of-your-vm> poweroff`
 
 #### Setting up a virtual network
-Eventually, we will deal with an infrastructure where more than one VM is running and where services are deployed on several virtual hosts. We need a network to let VMs communicate between them and with other services hosted elsewhere (for instance, to fetch a file from a server in the Cloud).
+Eventually, we will deal with an infrastructure where more than one VM is running and where services are deployed on several virtual hosts. We need a network to let VMs communicate between them and with other services hosted elsewhere (for instance, an authentication service in the Cloud).
 
-VirtualBox offers a Network Address Translation (NAT) service to group hosts into a network and let them communicate with each other. We can then create a NAT named `virt-net` via this command:
+VirtualBox contains ready-made network interfaces, for instance, you can list the details of a pre-configured interface named **vboxnet0** with `VBoxManage list hostonlyifs`; you get an output as follows.
 
-`VBoxManage natnetwork add --netname virt-net --network "192.168.15.0/24" --enable --dhcp on`
+```
+Name:            vboxnet0
+GUID:            786f6276-656e-4074-8000-0a0027000000
+DHCP:            Disabled
+IPAddress:       192.168.33.1
+NetworkMask:     255.255.255.0
+IPV6Address:     
+IPV6NetworkMaskPrefixLength: 0
+HardwareAddress: 0a:00:27:00:00:00
+MediumType:      Ethernet
+Status:          Down
+VBoxNetworkName: HostInterfaceNetworking-vboxnet0
+```
+:warning: In case the list of interfaces is empty, create one with the command `VBoxManage hostonlyif create`
 
-:warning: Notice that option `--network` may have a different definition (up to you); as it is right now, the gateway for this network is set to 192.168.15.1
+The network interface `vboxnet0` already provides connectivity among virtual machines and your laptop (host system). Open a terminal and change the configuration of our VM to make use of this interface.
 
+`VBoxManage modifyvm ${vm} --nic1 hostonly --hostonlyadapter1 vboxnet0`
 
-We have to replace the Network Interface Card (NIC) currently used in our VM with a NAT-compatible card and attach our VM to the new network `virt-net`.
+:warning: Be sure that the value `${vm}` is **not empty** with `echo ${vm}`; otherwise, set it again with vm='Debian-based_VM'`.
 
+**IP address resolution.** To assign a unique IP address for each VM within our virtual network, we create a [DHCP](https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol) server.
 
-- `VBoxManage modifyvm ${vm} --nic1 natnetwork`
-- `VBoxManage modifyvm ${vm} --nat-network1 virt-net`
+`VBoxManage dhcpserver add --ifname vboxnet0 --ip <ip-prefix-for-vboxnet0>.2 --netmask 255.255.255.0 --lowerip <ip-prefix-for-vboxnet0>.11  --upperip <ip-prefix-for-vboxnet0>.12 --enable`
 
-Start your VM again, log in using the administrator's credentials and verify that an IP address was assigned to your VM with the command `ip address`.
+:warning: Replace `<ip-prefix-for-vboxnet0>` with the appropriate subnet. In this example, the value of `<ip-prefix-for-vboxnet0>` is the subnet `192.168.33` of the network `vboxnet0` (listed with `VBoxManage list hostonlyifs`).
+
+:warning: In case the DHCP server already exists, replace `add` for `modify` in the previous command.
+
+The previous command links a DHCP server with our virtual interface, assign the IP address `192.168.33.2` to it and create a pull of 2 IP address within the range `192.168.33.[11-12]`.
+
+Start your VM again, log in using the administrator's credentials and verify that an IP address within the subnet `192.168.33` was assigned to your VM with the command `ip address`.
 
 # Setting up a secure connection
-As you notice, the console that VirtualBox pop-ups when you start a new VM is very useful when the host system have a desktop environment, however, on a regular basis we want remote and secure access to our VMs just like in a public IaaS Cloud. In this section, we show you how to access your VM through a secure channel with SSH.
+As you notice, the console that VirtualBox pop-ups when you start a new VM is very useful when the host system have a desktop environment, however, on a regular basis we want remote and secure access to our VMs just like in a public IaaS Cloud.
 
-#### Grant access to your hosts
-SSH uses public-key encryption to open a secure shell to a remote host.
-We want to register the public key as an authorized key on this host to allow password-less login and remote commands.
+At this point, you know the IP address of your VM and given that the network interface (`vboxnet0`) allows connectivity between your laptop (host system) and VMs running on it, you may use a terminal within your laptop.
 
-**Note:** If you already have your own SSH key, or want to generate a new one, feel free to use it in the following. If not, you can use the provided public/private key pair for illustration purposes in this tutorial.
+Start your VM again, **but now**, running in the background with `VBoxManage startvm ${vm} --type headless`. This command tells VirtualBox to avoid displaying its built-in console. Now, start a remote connection to your VM via `ssh user@192.168.33.11` with the following credentials: `username=user` and `password=user`. You got an output as follows.
 
-The first step is to register the public key as an authorized key on the VM host. This is done as follows:
+```
+$ ssh user@192.168.33.11
+user@192.168.56.11's password:
+Linux debian 4.9.0-7-686 #1 SMP Debian 4.9.110-3+deb9u2 (2018-08-13) i686
 
-1. Using the VirtualBox console of your VM, create the directory `.ssh` into the home directory.
-1. Position yourself within the new directory with `cd ~/.ssh`
-1. Grant access to remote hosts with:
-    - `wget -qO- https://tinyurl.com/y9vqdvaj >authorized_keys`
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
 
-The private key must be available on your host. It must have restrictive access rights for security reasons. To login from your host to your guest VM, use the following steps from a terminal on the host:
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Fri Sep 21 13:36:18 2018 from 192.168.56.1
+user@debian:~$
+```
 
-1. Download the private key with: `wget -O private_rsa_key https://tinyurl.com/y9t63e68`
-1. Alter the access mode to this file with: `chmod 600 private_rsa_key`
-1. Create a routing rule to forward SSH/TCP packets to the VM within our NAT network as follows:
-    - `VBoxManage natnetwork modify --netname virt-net --port-forward-4 "ssh:tcp:[]:3000:[VM_IP_ADDRESS]:22"`
-    - :warning: Replace `VM_IP_ADDRESS` with the IP address of your VM
-1. Log into the VM via: `ssh -o IdentityFile=private_rsa_key -p 3000 user@localhost`
-1. Power off your VM and observe that your local console closes the SSH connection.
+You just log in within your VM via a terminal in your laptop.
+
+#### Allowing automatic log in
+A [RSA key pair](https://en.wikipedia.org/wiki/Public-key_cryptography) allow you to to open a secure connection between hosts. To do so, we first need to create a key pair as follows.
+
+1. Open a new terminal within your laptop
+1. Type down the command `ssh-keygen -t rsa -C ""`
+1. When you are asked to provide a file name, type down `./rsa_key`
+1. When you are asked to provide a passphrase, ***leave this option empty***
+
+Keep the private key file `rsa_key` in a safe location for future use. The content of a public key (file `rsa_key.pub`) will remain within hosts you may access to.
+
+:pencil: **Note:** If you already have your own SSH key, feel free to use it in the following.
+
+Share the RSA public key with the VM as follows:
+
+1. Go back to the terminal you use to log in the VM
+1. Type down the command `su` and write `root` as password
+1. Change of directory and create the folder `.ssh` with `cd ~/; mkdir .ssh`
+1. Create a file to store authorized keys with `editor .ssh/authorized_keys`
+1. Copy/paste the content of the public RSA key
+1. Press they keys *Ctrl+O*, confirm the changes and leave the editor with *Ctrl+X*
+
+Now, you can create another session into the VM with `ssh -o IdentityFile=/PATH/TO/PRIVATE/RSA/KEY/rsa_key root@192.168.33.11`.
+
+:pencil: **Note:** This time you weren't asked to write authentication information.
+
+In another terminal, turn off the VM with `vm='Debian-based_VM'; VBoxManage controlvm ${vm} poweroff` and confirm that you were logged out from every session to the VM.
 
 # Launching multiple VMs
 To avoid the relatively long process of setting up a new VM, we will rather reuse an image from the existing one.
-You can create a copy of the previous VM using the command:
+You can create a copy of the previous VM as shown below.
 
-`VBoxManage clonevm ${vm} --name ${vm}-clone --options keepnatmacs --register`
+`VBoxManage clonevm ${vm} --name ${vm}-clone --register`
 
 :warning: The execution of this command may take up to 5 min.
 
-Now you are ready to start a new VM called `${vm}-clone`, log into it and consult the IP address that was assigned to this new host. Observe that both VMs belong to the same network and they can communicate with each other; within any VM, you may verify that using the next command: `ping IP_ADDRESS_OF_VM_OR_VM-CLONE`.
+Now you are ready to start a new VM called `${vm}-clone`, log into it and consult the IP address that was assigned to this new host. Both VMs belong to the same network, therefore, they can communicate with each other.
 
-:pencil2: **Exercise 1.** Check that you can use SSH with the new VM.
+:pencil2: **Exercise.** Check that you can use SSH with the new VM too.
 
 # Deploy a Web application
-We now have a virtual infrastructure with 2 VMs linked by a virtual network. In the last part of the tutorial, we will make use of this infrastructure to deploy [Wordpress](https://wordpress.com/) a popular Web hosting service.
+Until now, we have a virtual infrastructure with 2 VMs linked by a network and we will make use of this infrastructure to deploy [Wordpress](https://wordpress.com/), a popular Web hosting service.
 
-### Separating DB and web server
-A typical deployment of WordPress uses separate machines for the web server and its static content and the database keeping the dynamic content:
+:bulb: The VM already contains every package we require for deploying Wordpress; these packages are: `wordpress`, `apache2`, `mariadb-server`, `mariadb-client` and `php-mysql`.
 
-- DB within a VM
-- web server along with the application within a second VM
+A typical deployment of WordPress uses separate machines for the web server, its static content and the database keeping the dynamic content. Our aim is then host:
 
-<!--ER stopprd here -->
+- a database within a VM
+- and a web server in a second VM
 
-Once we configure and deploy our application, your local host will access the web content through your Web browser.
+In separate terminals, power on both VMs and log into each one via SSH.
 
-### Setting up the DB host
-Using a secure connection (via SSH) open a terminal in your local host and ***log into*** our first virtual machine ***Debian-based_VM***.
+:warning: We will refer to `IP_ADDR_OF_DB_HOST` as the IP address of a first VM that contains the database and with `IP_ADDR_OF_WEB_SERVER` as the IP address of a second VM that contains the web server. For the rest of this tutorial, replace these aliases with the assigned IP address on each VM.   
 
-:warning: Using a SSH connection will allow you to copy/paste content into the VM.
+#### Setting up the database host
+First, allow other VMs refer to the database (DB) by the local host's IP address as follows:
 
-Install a SQL database as shown:
+1. Open the DB system's configuration file with: `editor /etc/mysql/mariadb.conf.d/50-server.cnf`
+1. Scroll down and find the first line that contains this parameter `bind-address`
+1. Replace the whole line with `bind-address = IP_ADDR_OF_DB_HOST`
+1. Apply the new changes with `systemctl restart mysql`
 
-`apt install -y mariadb-server`
-
-Given that security is always a concern, you may launch the built-in script `mysql_secure_installation` to overwrite the default configuration of DataBase Management System (DBMS).
-
-Our new DBMS is now installed and now we need to create a database (DB) for storing the meta-data that our application requires. Create a file called `wp.sql` via the command `editor wp.sql` with the following content to create a new DB
+Then, we need to create the DB that Wordpress requires. Create the file `wp.sql` and add the following content.
 
 ```sql
 CREATE DATABASE wordpress;
 
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER
   ON wordpress.*
-  TO wordpress@localhost
+  TO wordpress@IP_ADDR_OF_WEB_SERVER
   IDENTIFIED BY 'wordpress';
 
 FLUSH PRIVILEGES;
 ```
 
-:warning: When you use `editor` to create files, the combination of keys *Ctrl+O* allow you to save changes and use *Ctrl+X* to exit from the editor.
+With the previous instructions, we indicate the DB system to create a new DB (called `wordpress`) and grant access to only one user that initiates a connection from the web sever. The authentication information of such a user is as follows: `username/password=wordpress/wordpress`.
 
-Create the new DB with:
+Apply the previous configuration with `cat wp.sql | mysql --defaults-extra-file=/etc/mysql/debian.cnf` and list all available databases with `mysql -e "show databases"`.
 
-`cat wp.sql | mysql --defaults-extra-file=/etc/mysql/debian.cnf`
+#### Setting up the web server
+We will now configure a web server in your second VM. In Wordpress, you can start creating a new site by adding the next content in the file
+`/etc/apache2/sites-available/wp.conf`.
 
-List the available databases lauching the command `mysql -u root -p`, you will have an output as follows.
-
-```sh
-root@debian 12:57:57 ~
-$ mysql -u root -p
-Enter password:
-Welcome to the MariaDB monitor.  Commands end with ; or \g.
-Your MariaDB connection id is 8
-Server version: 10.1.26-MariaDB-0+deb9u1 Debian 9.1
-
-Copyright (c) 2000, 2017, Oracle, MariaDB Corporation Ab and others.
-
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
-MariaDB [(none)]> show databases;
-+--------------------+
-| Database           |
-+--------------------+
-| information_schema |
-| mysql              |
-| performance_schema |
-| wordpress          |
-+--------------------+
-
-```
-
-### Setting up the web content host
-We are now ready to install the packages that Wordpress require to serve content. Continue with the following steps:
-
-1. As we just did before, open a different terminal within your local host and ***log into*** the second virtual machine ***Debian-based_VM-clone*** through a SSH connection, continue as follows.
-1. Install required packages via:
-  - `apt install -y wordpress curl apache2`
-1. Create the following configuration file with `editor /etc/apache2/sites-availablewp.conf` and add this content:
+:warning: Be sure to replace `IP_ADDR_OF_WEB_SERVER` with the appropriate value.
 
 ```java
 <VirtualHost *:80>
 
-  ServerName myblog.lingi2145.uclouvain.be
+  ServerName IP_ADDR_OF_WEB_SERVER
 
   DocumentRoot /usr/share/wordpress
   Alias /wp-content /var/lib/wordpress/wp-content
@@ -243,13 +257,13 @@ We are now ready to install the packages that Wordpress require to serve content
 </VirtualHost>
 ```
 
-1. Overwrite the default configuration of Wordpress with your new one with these commands:
+Then, overwrite the default configuration with the previous one with these commands:
 
   - `a2dissite 000-default`
   - `a2ensite wp`
   - `systemctl reload apache2`
 
-1. Link the DB with your web server by creating a PHP file with the command `editor /etc/wordpress/config-myblog.lingi2145.uclouvain.be.php` and add this content:
+Finally, link the DB and the web server by creating a PHP file with the command `editor /etc/wordpress/config-IP_ADDR_OF_WEB_SERVER.php` and add this content:
 
 ```php
 <?php
@@ -261,18 +275,17 @@ We are now ready to install the packages that Wordpress require to serve content
 ?>
 ```
 
-:warning: Replace `IP_ADDRESS_OF_DB_HOST` with the IP address of the VM that host the DB.
+That's it, you can now start using Wordpress to design your new web site :sunglasses:
 
-### Create another routing route
-You will access Wordpress via your local web browser and we require to add a new routing rule within the virtual network to do so; in another new terminal of your local host write down the following command:
+#### Start using Wordpress
+In your web browser just type down the IP address of the web server, you will see the Welcome page of Wordpress.
 
-`VBoxManage natnetwork modify --netname virt-net --port-forward-4 "ssh:tcp:[]:3001:[VM_IP_ADDRESS_OF_WEB_HOST]:80"`
-With this rule, incoming traffic in port `3001` of your local host will be forwarded to port `80` within the VM hosting the web server.
+ ![wp1](wordpress_welcome.png)
 
+ Follow the instructions of the welcome page and once you authenticate, the Dashboard window of Wordpress pop ups.
 
-### Log in to your web hosting service!
-See your WordPress blog in action! :sunglasses: In the web browser of your local host, enter the URL `localhost:3001` and use the following credentials to start editing your blog: `username=wordpress` and `password=wordpress`
- ![WordPressBlog](wordPressBlog.png)
+ ![wp2](wordpress_dashboard.png)
 
+Find more details about how to customize your web content in the [official site](https://www.wordpress.com).
 
-:white_check_mark: *Congratulations, you made it* and do not forget to stop your instances.
+:checkered_flag: **Congratulations, you made it !**. Do not forget to stop your VMs to avoid decreasing the performance of your system.
