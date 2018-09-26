@@ -161,7 +161,7 @@ In this section we show you how to create a container of Wordpress and link it t
 
 We can now instantiate a Wordpress container using the next command.
 
-`docker run --name wordpress --network wordpress-network -e WORDPRESS_DB_PASSWORD=mariadb --link wodpress-db:mysql -p 80:80 -d wordpress`
+`docker run --name wordpress --network wordpress-network -e WORDPRESS_DB_PASSWORD=mariadb --link wordpress-db:mysql -p 80:80 -d wordpress`
 
 Here you have more details about every option.
 
