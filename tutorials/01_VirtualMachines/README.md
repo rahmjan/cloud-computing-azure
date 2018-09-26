@@ -289,3 +289,5 @@ In your web browser just type down the IP address of the web server, you will se
 Find more details about how to customize your web content in the [official site](https://www.wordpress.com).
 
 :checkered_flag: **Congratulations, you made it !**. Do not forget to stop your VMs to avoid decreasing the performance of your system.
+
+<!-- this is an official comment -->
