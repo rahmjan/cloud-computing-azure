@@ -22,7 +22,7 @@ Both components run in separate Docker containers.
 :pencil2: **Create a Docker network.**
 We use this network to attach the containers.
 
-AuthS is delivered with two Dockerfiles located in the directories `../src/back_end/users` and `../src/back_end/users/src/db`.
+AuthS is delivered with two Dockerfiles located in the directories `../src/back-end/users` and `../src/back-end/users/src/db`.
 The former refers to the users database and the latter to the server, which answers REST calls over HTTP.
 The source code is organized as follows:
 
