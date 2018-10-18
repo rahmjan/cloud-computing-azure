@@ -45,6 +45,13 @@ services:     # list all services for your application
           memory: 50M # use up to 50MB of memory in a host node
       restart_policy: # restart if something went wrong
         condition: on-failure
+      # /!\ be sure that one of the nodes in your swarm has the label "daemon"
+      #     before the deployment of the stack "authentication". More details
+      #     in section [Increase the size of your Swarm], link available here:
+      #     https://tinyurl.com/y7hh76x5
+      placement:
+        constraints:
+          - node.labels.type == daemon
   # server that listens HTTP requests
   users-daemon:
     image: mexicalli/users-daemon:latest
@@ -60,9 +67,13 @@ services:     # list all services for your application
         limits:
           cpus: "0.1"
           memory: 50M
-      # placement:
-      #   constraints:
-      #     - node.labels.type == daemon
+      # /!\ be sure that one of the nodes in your swarm has the label "daemon"
+      #     before the deployment of the stack "authentication". More details
+      #     in section [Increase the size of your Swarm], link available here:
+      #     https://tinyurl.com/y7hh76x5
+      placement:
+        constraints:
+          - node.labels.type == daemon
   # Docker user interface for swarms
   visualizer:
     image: dockersamples/visualizer:stable
