@@ -1,0 +1,19 @@
+version: "3"
+services:
+  instacart_sample:
+    build: ./db
+    ports:
+      - 5984:5984
+  init_db:
+    build: ./init_db
+    depends_on:
+      - instacart_sample
+    command: ./wait-for-couchdb.sh
+  plotter:
+    image: mexicalli/plotter:latest
+    build: ./plotter
+    depends_on:
+      - instacart_sample
+    command: ./plot.sh
+    volumes:
+      - "./plots:/usr/app/plots"
