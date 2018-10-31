@@ -88,7 +88,7 @@ This screen shows the expected output:
 
 ![image](images/departments.png)
 
-Observe that a function is JavaScript is required to select all departments.
+Observe that a JavaScript function is required to select all departments.
 You can see the implementation of such query by clicking on the wrench icon (:wrench:) next to  ***departments*** and then select the edit option to get this output:
 
 ![image](images/edit-view.png)
