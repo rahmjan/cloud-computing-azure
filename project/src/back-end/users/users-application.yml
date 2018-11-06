@@ -1,6 +1,4 @@
 version: "3"  # docker-compose version
-networks:
-  users-app:  # we rely on only one network
 services:     # list all services for your application
   # database of users
   users-db:
@@ -8,46 +6,36 @@ services:     # list all services for your application
     image: mexicalli/users-db:latest
     # relative location of Dockerfile
     build: src/db
-    networks: ["users-app"]
     # expose port 5984 of host node
     ports: [ "5984:5984" ]
     deploy:
       replicas: 1
-      resources:
-        limits:
-          cpus: "0.1" # use up to 10% of CPU over cores in a host node
-          memory: 50M # use up to 50MB of memory in a host node
       restart_policy: # restart if something went wrong
         condition: on-failure
       # /!\ be sure that one of the nodes in your swarm has the label "daemon"
       #     before the deployment of the stack "authentication". More details
       #     in section [Increase the size of your Swarm], link available here:
       #     https://tinyurl.com/y7hh76x5
-      placement:
-        constraints:
-          - node.labels.type == daemon
+      # placement:
+      #   constraints:
+      #     - node.role == manager
   # server that listens HTTP requests
   users-daemon:
     image: mexicalli/users-daemon:latest
     build: ./
     # wait until service db is up
     depends_on: [ "users-db" ]
-    networks: ["users-app"]
     # expose port 80 of host node
     ports: [ "80:80" ]
     deploy:
       replicas: 1
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: 50M
       # /!\ be sure that one of the nodes in your swarm has the label "daemon"
       #     before the deployment of the stack "authentication". More details
       #     in section [Increase the size of your Swarm], link available here:
       #     https://tinyurl.com/y7hh76x5
-      placement:
-        constraints:
-          - node.labels.type == daemon
+      # placement:
+      #   constraints:
+      #     - node.labels.type == daemon
   # Docker user interface for swarms
   visualizer:
     image: dockersamples/visualizer:stable
