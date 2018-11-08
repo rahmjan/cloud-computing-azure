@@ -33,9 +33,10 @@ services:     # list all services for your application
       #     before the deployment of the stack "authentication". More details
       #     in section [Increase the size of your Swarm], link available here:
       #     https://tinyurl.com/y7hh76x5
-      # placement:
-      #   constraints:
-      #     - node.labels.type == daemon
+      placement:
+        constraints:
+          - node.labels.type == daemon
+
   # Docker user interface for swarms
   visualizer:
     image: dockersamples/visualizer:stable
