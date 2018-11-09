@@ -59,8 +59,7 @@ docker-machine scp -r -d ./../../../project/src/back-end/ node0:./back-end/ 1> /
 
 # Deploying services
 echo "### Deploying services ..."
-docker-machine ssh node0 "docker stack deploy -c ./back-end/users/users-application.yml authentication" ## here is something wrong...
-#docker-machine ssh node0 "cd ./back-end/users && ./services.sh"
+docker-machine ssh node0 "docker stack deploy -c ./back-end/users/users-application.yml authentication"
 
 # End
 echo "### The swarm leader ip is: ${leader_ip}"
