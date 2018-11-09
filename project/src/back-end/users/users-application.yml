@@ -1,4 +1,4 @@
-version: "3"  # docker-compose version
+version: "3.2"  # docker-compose version
 services:     # list all services for your application
   # database of users
   users-db:
@@ -16,9 +16,10 @@ services:     # list all services for your application
       #     before the deployment of the stack "authentication". More details
       #     in section [Increase the size of your Swarm], link available here:
       #     https://tinyurl.com/y7hh76x5
-      # placement:
-      #   constraints:
-      #     - node.role == manager
+      placement:
+        constraints:
+          - node.role == manager
+
   # server that listens HTTP requests
   users-daemon:
     image: mexicalli/users-daemon:latest
@@ -29,6 +30,8 @@ services:     # list all services for your application
     ports: [ "80:80" ]
     deploy:
       replicas: 1
+      restart_policy: # restart if something went wrong
+        condition: on-failure
       # /!\ be sure that one of the nodes in your swarm has the label "daemon"
       #     before the deployment of the stack "authentication". More details
       #     in section [Increase the size of your Swarm], link available here:
@@ -39,8 +42,12 @@ services:     # list all services for your application
 
   # Docker user interface for swarms
   visualizer:
-    image: dockersamples/visualizer:stable
-    ports: [ "8080:8080" ]
+    image: dockersamples/visualizer:latest
+    ports:
+      - published: 8080
+        target: 8080
+        protocol: tcp
+        mode: host
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     deploy:
