@@ -7,7 +7,11 @@ services:     # list all services for your application
     # relative location of Dockerfile
     build: src/db
     # expose port 5984 of host node
-    ports: [ "5984:5984" ]
+    ports:
+      - published: 5984
+        target: 5984
+        protocol: tcp
+        mode: host
     deploy:
       replicas: 1
       restart_policy: # restart if something went wrong
@@ -27,7 +31,11 @@ services:     # list all services for your application
     # wait until service db is up
     depends_on: [ "users-db" ]
     # expose port 80 of host node
-    ports: [ "80:80" ]
+    ports:
+      - published: 80
+        target: 80
+        protocol: tcp
+        mode: host
     deploy:
       replicas: 1
       restart_policy: # restart if something went wrong

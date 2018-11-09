@@ -40,7 +40,7 @@ docker-machine ssh node0 "docker swarm init --advertise-addr ${leader_ip}"
 # Swarm token
 manager_token=$(docker-machine ssh node0 "docker swarm join-token manager -q")
 
-# Joinig manager nodes
+# Joining nodes
 echo "### Joining nodes ..."
 for i in `seq 1 ${NUM_OF_NODES}`
 do
@@ -59,7 +59,8 @@ docker-machine scp -r -d ./../../../project/src/back-end/ node0:./back-end/ 1> /
 
 # Deploying services
 echo "### Deploying services ..."
-docker-machine ssh node0 "docker stack deploy -c ./back-end/users/users-application.yml authentication"
+docker-machine ssh node0 "docker stack deploy -c ./back-end/users/users-application.yml authentication" ## here is something wrong...
+#docker-machine ssh node0 "cd ./back-end/users && ./services.sh"
 
 # End
 echo "### The swarm leader ip is: ${leader_ip}"

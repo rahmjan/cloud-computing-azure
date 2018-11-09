@@ -1,7 +1,7 @@
 import axios from 'axios' // we use this library as HTTP client
 // you can overwrite the URI of the authentication micro-service
 // with this environment variable
-const url = process.env.REACT_APP_AUTH_SERVICE_URL || 'http://localhost:3000'
+const url = process.env.REACT_APP_AUTH_SERVICE_URL || 'http://192.168.99.100:80'
 
 class AuthenticationService {
     // setters
