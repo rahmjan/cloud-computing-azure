@@ -1,11 +1,11 @@
 local:
-	cd ./src/back-end/ && ./create_back-end.sh
+	cd ./src/back-end/ && ./create_back-end_local.sh
 
 local-clean:
-	cd ./src/back-end/ && ./clean_back-end.sh
+	cd ./src/back-end/ && ./clean_back-end_local.sh
 
 azure:
-	echo "AZURE"
+	cd ./src/back-end/ && ./create_back-end_azure.sh
 
 azure-clean:
-	echo "AZURE-clean"
+	cd ./src/back-end/ && ./clean_back-end_azure.sh
