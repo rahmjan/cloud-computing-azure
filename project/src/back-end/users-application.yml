@@ -5,7 +5,7 @@ services:     # list all services for your application
     # fetch pre-build image from a registry on Docker Hub (https://hub.docker.com/)
     image: mexicalli/users-db:latest
     # relative location of Dockerfile
-    build: src/db
+    build: ./users/src/db
     # expose port 5984 of host node
     ports: [ "5984:5984" ]
     deploy:
@@ -19,7 +19,7 @@ services:     # list all services for your application
   # server that listens HTTP requests
   users-daemon:
     image: mexicalli/users-daemon:latest
-    build: ./
+    build: ./users/
     # wait until service db is up
     depends_on: [ "users-db" ]
     # expose port 80 of host node
