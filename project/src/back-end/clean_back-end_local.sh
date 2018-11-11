@@ -2,6 +2,8 @@
 
 docker stack rm authentication
 docker swarm leave --force
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
 
 # Clean Docker client environment
 echo "### Cleaning Docker client environment ..."
