@@ -42,7 +42,8 @@ token=$(ssh -i ./ssh/rsa_key ${USER_NAME}@node1-${GITHUB_ACC}.francecentral.clou
 echo "### Joining nodes ..."
 for i in `seq 2 ${NUM_OF_NODES}`
 do
-    ssh -i ./ssh/rsa_key ${USER_NAME}@node${i}-${GITHUB_ACC}.francecentral.cloudapp.azure.com "docker swarm join --token ${token} ${leader_ip}:2377"
+    MY_IP=$(dig +short node${i}-${GITHUB_ACC}.francecentral.cloudapp.azure.com)
+    ssh -i ./ssh/rsa_key ${USER_NAME}@node${i}-${GITHUB_ACC}.francecentral.cloudapp.azure.com "docker swarm join --advertise-addr ${MY_IP} --token ${token} ${leader_ip}:2377"
 done
 
 # Set daemon type

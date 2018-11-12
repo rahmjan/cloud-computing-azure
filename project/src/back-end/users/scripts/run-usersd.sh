@@ -19,8 +19,10 @@
 
 set -o nounset                              # Treat unset variables as an error
 echo "Wait until the CouchDB deamon starts and create database: ${DB_NAME}."
+echo "Command: curl -X PUT ${DB_URL}"
 until curl -X PUT ${DB_URL} ; do
   echo -e "\t Database wasn't created - trying again later..."
+  echo -e "Command: curl -X PUT ${DB_URL}"
   sleep 1
 done
 echo "Database [${DB_NAME}] created !"

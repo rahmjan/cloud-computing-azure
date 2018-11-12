@@ -26,7 +26,8 @@ token=$(docker swarm join-token worker -q)
 echo "### Joining nodes ..."
 for i in `seq 2 ${NUM_OF_NODES}`
 do
-    docker-machine ssh node${i} "docker swarm join --token ${token} ${leader_ip}:2377"
+    MY_IP=$(docker-machine ip node${i})
+    docker-machine ssh node${i} "docker swarm join --advertise-addr ${MY_IP} --token ${token} ${leader_ip}:2377"
 done
 
 # Set daemon type
@@ -41,4 +42,4 @@ echo "### Deploying services ..."
 docker stack deploy -c ./users-application.yml authentication
 
 # End
-echo "### The swarm leader ip is: ${leader_ip} or 127.0.0.1"
+echo "### The swarm leader ip is: ${leader_ip}"
