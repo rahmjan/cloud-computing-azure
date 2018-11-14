@@ -1,0 +1,54 @@
+version: "3"  # docker-compose version
+services:     # list all services for your application
+  # database of users
+#  users-db:
+#    # fetch pre-build image from a registry on Docker Hub (https://hub.docker.com/)
+    image: rahmjan/users-db
+    # relative location of Dockerfile
+    build: ./users/src/db
+    # expose port 5984 of host node
+    ports: [ "6000:5984" ]
+#    deploy:
+#      replicas: 1
+#      restart_policy: # restart if something went wrong
+#        condition: on-failure
+#      placement:
+#        constraints:
+#          - node.labels.type == daemon
+
+  # server that listens HTTP requests
+#  users-daemon:
+    image: rahmjan/users-daemon
+    build: ./users/
+    # wait until service db is up
+    depends_on: [ "users-db" ]
+    # expose port 80 of host node
+    ports: [ "1000:80" ]
+#    deploy:
+#      replicas: 1
+#      placement:
+#        constraints:
+#          - node.labels.type == daemon
+
+  # Docker user interface for swarms
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports: [ "8080:8080" ]
+    volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+#    deploy:
+#      placement:
+#        constraints:
+#          - node.role == manager
+
+  catalog:
+    image: rahmjan/catalog
+    build: ./catalog/
+    depends_on: [ "catalog-db" ]
+    ports: [ "1001:80" ]
+
+  catalog-db:
+    image: rahmjan/catalog-db
+    build: ./catalog/src/db
+    ports: [ "6001:5984" ]
+
