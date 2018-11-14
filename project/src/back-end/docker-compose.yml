@@ -1,12 +1,9 @@
 version: "3"  # docker-compose version
 services:     # list all services for your application
   # database of users
-#  users-db:
-#    # fetch pre-build image from a registry on Docker Hub (https://hub.docker.com/)
+  users-db:
     image: rahmjan/users-db
-    # relative location of Dockerfile
     build: ./users/src/db
-    # expose port 5984 of host node
     ports: [ "6000:5984" ]
 #    deploy:
 #      replicas: 1
@@ -17,12 +14,10 @@ services:     # list all services for your application
 #          - node.labels.type == daemon
 
   # server that listens HTTP requests
-#  users-daemon:
+  users-daemon:
     image: rahmjan/users-daemon
     build: ./users/
-    # wait until service db is up
     depends_on: [ "users-db" ]
-    # expose port 80 of host node
     ports: [ "1000:80" ]
 #    deploy:
 #      replicas: 1
