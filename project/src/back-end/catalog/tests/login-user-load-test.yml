@@ -1,0 +1,10 @@
+config:
+  # Replace (if needed) IP address of VM [node]
+  target: http://192.168.99.100
+  phases:
+    - duration: 120
+      arrivalRate: 20
+scenarios:
+  - flow:
+    - get:
+        url: /user/xx/yy

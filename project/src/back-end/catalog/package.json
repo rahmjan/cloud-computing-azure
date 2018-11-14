@@ -1,0 +1,25 @@
+{
+  "scripts": {
+    "start": "gulp --gulpfile gulpfile.js",
+    "test": "_mocha 'tests/**/*.test.js'"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.3.0",
+    "body-parser": "~1.17.1",
+    "debug": "~2.6.6",
+    "dotenv": "~4.0.0",
+    "express": "~4.15.2",
+    "jwt-simple": "^0.5.0",
+    "moment": "^2.15.2",
+    "morgan": "~1.8.1",
+    "nano": "^6.4.3",
+    "pg": "^6.1.4"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1",
+    "mocha": "^3.2.0"
+  }
+}
