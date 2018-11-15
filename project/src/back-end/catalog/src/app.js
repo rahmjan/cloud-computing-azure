@@ -26,7 +26,6 @@ app.get('', (req, res) => {
         .catch((msg) => {
             res.status(500).json({
                 status: 'error - catalog',
-                message: msg
             })
         })
 
