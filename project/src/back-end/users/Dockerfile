@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:${PATH}
 
 ENV DB_HOST users-db
-ENV DB_NAME scapp_users
+ENV DB_NAME users
 
 ENV COUCHDB_ADMIN_USER admin
 ENV COUCHDB_ADMIN_PASS admin

@@ -6,6 +6,19 @@ const localAuth = require('./helpers/token_de_en_coders')
 
 const app = express.Router()
 
+app.get('', (req, res) => {
+
+    log(`Test of users`)
+    log(`Test of users`)
+    log(`Test of users`)
+    log(`Test of users`)
+    log(`Test of users`)
+
+    res.status(200).json({
+        status: '!!!!! success - user'
+    })
+})
+
 app.post('/user', (req, res) => {
   var username = req.body.username
   var password = req.body.password
