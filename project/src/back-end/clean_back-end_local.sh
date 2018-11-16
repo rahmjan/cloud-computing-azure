@@ -2,9 +2,10 @@
 
 #docker stack rm authentication
 #docker swarm leave --force
-#docker stop $(docker ps -aq)
-#docker rm $(docker ps -aq)
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
 #docker rmi $(docker images -aq)
+docker rmi --force $(docker images -a | grep "<none>" | awk '{print $3}')
 #
 ## Clean Docker client environment
 #echo "### Cleaning Docker client environment ..."
