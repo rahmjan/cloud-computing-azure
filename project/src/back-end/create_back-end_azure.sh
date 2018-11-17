@@ -1,6 +1,6 @@
 USER_NAME=myAdmin
 ADMIN_PASS=Admin1234
-GITHUB_ACC=rahmjan  ## you need to change it
+GITHUB_ACC=tanguytlc  ## you need to change it
 
 ### Create azure back-end ###
 NUM_OF_NODES=2
@@ -27,6 +27,12 @@ done
 # node1-rahmjan.francecentral.cloudapp.azure.com
 # ssh -i ./ssh/rsa_key ${USER_NAME}@node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com
 # ssh -i ./ssh/rsa_key myAdmin@node1-rahmjan.francecentral.cloudapp.azure.com
+
+# Add key to know_hosts
+for i in `seq 1 ${NUM_OF_NODES}`
+do
+    ssh-keyscan -H $(dig +short node${i}-${GITHUB_ACC}.francecentral.cloudapp.azure.com) >> ~/.ssh/known_hosts
+done
 
 # Get IP from leader node
 leader_ip=$(dig +short node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com)
@@ -55,6 +61,8 @@ done
 # Copy data to manager
 echo "### Copy data to manager ..."
 rsync -e "ssh -i ./ssh/rsa_key" -r ./../../../project/src/back-end/ ${USER_NAME}@node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com:./back-end/
+#rsync -e "ssh -i ./ssh/rsa_key" -r ./../../../project/src/back-end/ ${USER_NAME}@node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com:./back-end/
+
 #rsync -e "ssh -i ./ssh/rsa_key" -r ./../../../project/src/back-end/ myAdmin@node1-rahmjan.francecentral.cloudapp.azure.com:./back-end/
 
 # Deploying services
