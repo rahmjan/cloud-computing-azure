@@ -2,22 +2,22 @@
 #### What we need To Do: ####
 
     All:
-        get catalog - done (get)
+        get catalog (get) - done
 
     User:
         cart
-            history - done (get)
-            add (post) - done
+            history (get) - done
+            add (post) - done  - test if empty
             remove (delete) - done
 
         purchase
-            history (get)
+            history (get) - done
             add/checkout (post)
 
     Admin:
-        update catalog (post)
-        new item to catalog (put)
-        remove (delete)
+        new catalog (put) - done
+        update catalog (post) - done
+        remove (delete) - done
 
 
     images to azure storage

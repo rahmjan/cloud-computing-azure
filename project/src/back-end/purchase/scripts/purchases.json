@@ -1,0 +1,22 @@
+{
+  "_id": "admin",
+  "purchases":[
+    {
+      "date": "07-06-2016 06:38:34",
+      "totalPrice": 10089,
+      "65": {
+        "quantity": 25,
+        "name": "Jablko",
+        "image": "test",
+        "price": 40,
+        "totalPrice": 60
+      },
+      "8": {
+        "quantity": 71,
+        "name": "Hruska",
+        "image": "test2",
+        "price": 20,
+        "totalPrice": 62
+      }
+    }]
+}

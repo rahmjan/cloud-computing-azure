@@ -2,9 +2,9 @@ const log = require('debug')('users-d')
 
 const DB = require('nano')(process.env.DB_URL)
 
-function getCatalog (catalog) {
+function getPurchases (username) {
   return new Promise((resolve, reject) => {
-      DB.get(catalog, (ko, ok) => {
+      DB.get(username, (ko, ok) => {
       if (ko) {
         log(ko)
         reject(ko.reason)
@@ -14,9 +14,9 @@ function getCatalog (catalog) {
   })
 }
 
-function insertCatalog (catal) {
+function insertPurchases (purchases) {
     return new Promise((resolve, reject) => {
-        DB.insert(catal, catal._id, (ko, ok) => {
+        DB.insert(purchases, purchases._id, (ko, ok) => {
             if (ko) {
                 log(ko)
                 reject(ko.reason)
@@ -26,7 +26,8 @@ function insertCatalog (catal) {
     })
 }
 
+
 module.exports = {
-  getCatalog,
-    insertCatalog
+    getPurchases,
+    insertPurchases
 }

@@ -66,3 +66,16 @@ services:     # list all services for your application
     logging:
       driver: "none"
 
+#  purchase:
+#    image: rahmjan/shopping_cart
+#    build: ./purchase/
+#    depends_on: [ "purchase-db" ]
+#    ports: [ "1003:80" ]
+#
+#  purchase-db:
+#    image: rahmjan/shopping_cart-db
+#    build: ./purchase/src/db
+#    ports: [ "6003:5984" ]
+#    logging:
+#      driver: "none"
+
