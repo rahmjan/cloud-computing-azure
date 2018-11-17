@@ -1,16 +1,16 @@
 #!/bin/bash -
 
-add_catalog () {
-    WHERE=${DB_URL}
-    WHAT='Content-Type: application/json'
-
-    until curl -X GET ${WHERE} ; do
-        sleep 1
-    done
-
-    DATA=$(cat ./scripts/catalog.json)
-    curl -X POST --data "${DATA}" -H "${WHAT}" ${WHERE}
-}
+#add_catalog () {
+#    WHERE=${DB_URL}
+#    WHAT='Content-Type: application/json'
+#
+#    until curl -X GET ${WHERE} ; do
+#        sleep 1
+#    done
+#
+#    DATA=$(cat ./scripts/catalog.json)
+#    curl -X POST --data "${DATA}" -H "${WHAT}" ${WHERE}
+#}
 
 # Treat unset variables as an error
 set -o nounset
@@ -24,9 +24,17 @@ done
 echo "Database [${DB_NAME}] created !"
 
 # Add users
-add_catalog &
+#add_catalog &
 
 # Launch
 echo "Launch service"
 npm start
+
+### Structure of DB
+#{
+#  _id: "user-name",
+#  password: "hash",
+#  isUser: true,
+#  isAdmin: false
+#}
 
