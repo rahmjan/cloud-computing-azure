@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:${PATH}
 
 ENV DB_HOST catalog-db
-ENV DB_NAME catalog
+ENV DB_NAME catalogs
 
 ENV COUCHDB_ADMIN_USER admin
 ENV COUCHDB_ADMIN_PASS admin
@@ -19,7 +19,7 @@ RUN npm install
 
 #
 ADD gulpfile.js .
-ADD scripts/run.sh .
+ADD scripts scripts
 ADD src src
 
-CMD ./run.sh
+CMD ./scripts/run.sh

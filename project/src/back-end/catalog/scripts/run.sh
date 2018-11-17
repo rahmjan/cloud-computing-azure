@@ -1,32 +1,32 @@
 #!/bin/bash -
-#===============================================================================
-#
-#          FILE: run-usersd.sh
-#
-#         USAGE: ./run-usersd.sh
-#
-#   DESCRIPTION:
-#
-#       OPTIONS: ---
-#  REQUIREMENTS: ---
-#          BUGS: ---
-#         NOTES: ---
-#        AUTHOR: Raziel Carvajal-Gomez (), raziel.carvajal@uclouvain.be
-#  ORGANIZATION:
-#       CREATED: 10/08/2018 10:52
-#      REVISION:  ---
-#===============================================================================
 
-set -o nounset                              # Treat unset variables as an error
+add_users () {
+    WHERE=${DB_URL}
+    WHAT='Content-Type: application/json'
+
+    until curl -X GET ${WHERE} ; do
+        sleep 1
+    done
+
+    DATA=$(cat ./scripts/catalog.json)
+    curl -X POST --data "${DATA}" -H "${WHAT}" ${WHERE}
+}
+
+# Treat unset variables as an error
+set -o nounset
+
+# Create Database
 echo "Wait until the CouchDB deamon starts and create database: ${DB_NAME}."
-echo "Command: curl -X PUT ${DB_URL}"
 until curl -X PUT ${DB_URL} ; do
   echo -e "\t Database wasn't created - trying again later..."
-  echo -e "Command: curl -X PUT ${DB_URL}"
   sleep 1
 done
 echo "Database [${DB_NAME}] created !"
-curl http://127.0.0.1:5984
 
-echo "Launch service deamon"
+# Add users
+add_catalog &
+
+# Launch
+echo "Launch service"
 npm start
+

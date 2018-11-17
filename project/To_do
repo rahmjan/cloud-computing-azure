@@ -1,0 +1,19 @@
+
+#### What we need To Do: ####
+
+    user services (Browse through a collection of items, and see a page for each item individually.)
+
+    admin services
+
+    images to azure storage
+
+    logging (such as viewing an item?)
+
+    elastic scaling
+
+    Deployment
+        azure
+        local
+        local VMs)
+
+    format of database?

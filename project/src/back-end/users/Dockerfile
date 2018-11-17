@@ -20,7 +20,7 @@ RUN npm install
 
 #
 ADD gulpfile.js .
-ADD scripts/run-usersd.sh .
+ADD scripts scripts
 ADD src src
 
-CMD ./run-usersd.sh
+CMD ./scripts/run-usersd.sh

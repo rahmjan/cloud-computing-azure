@@ -1,16 +1,17 @@
 #!/bin/bash -
 
 add_users () {
-    WHERE=localhost:80/user
+    WHERE=http://localhost:80/user
+    WHAT='Content-Type: application/json'
 
-    until curl -X PUT ${WHERE} ; do
+    until curl -X GET ${WHERE} ; do
         sleep 1
     done
 
-    DATA="username=tito&password=toti"
-    curl -X POST --data ${DATA} ${WHERE}
-    DATA="username=admin&password=admin"
-    curl -X POST --data ${DATA} ${WHERE}
+    DATA='{"username": "tito", "password": "toti", "isUser": true, "isAdmin": false}'
+    curl -X POST --data "${DATA}" -H "${WHAT}" ${WHERE}
+    DATA='{"username": "admin", "password": "admin", "isUser": true, "isAdmin": true}'
+    curl -X POST --data "${DATA}" -H "${WHAT}" ${WHERE}
 }
 
 # Treat unset variables as an error
@@ -39,3 +40,10 @@ npm start
 #  isUser: true,
 #  isAdmin: false
 #}
+
+# How to register users to database
+#JSON_DOC='{"_id": "rahmjan", "event": "watch-tv", "password": "123456"}'
+#curl -X POST --data "${JSON_DOC}" -H "Content-Type: application/json" http://localhost:6000/users
+
+#DATA='{"username": "tito", "password": "toti"}'
+#curl -X POST --data "$DATA" -H "Content-Type: application/json" http://localhost:1000/user
