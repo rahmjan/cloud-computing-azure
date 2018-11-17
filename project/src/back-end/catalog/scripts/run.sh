@@ -1,6 +1,6 @@
 #!/bin/bash -
 
-add_users () {
+add_catalog () {
     WHERE=${DB_URL}
     WHAT='Content-Type: application/json'
 
