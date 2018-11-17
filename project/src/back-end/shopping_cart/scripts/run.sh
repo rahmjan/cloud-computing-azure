@@ -33,10 +33,8 @@ npm start
 ### Structure of DB
 #{
 #  "_id": "user-name",
-#  "products":[
-#    {
-#    "product_id": 5,
+#  "product_id":{
 #    "quantity": 2
-#    }]
+#    }
 #}
 

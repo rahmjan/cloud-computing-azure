@@ -1,13 +1,32 @@
 
 #### What we need To Do: ####
 
-    user services
+    All:
+        get catalog - done (get)
 
-    admin services
+    User:
+        cart
+            history - done (get)
+            add (post) - done
+            remove (delete) - done
+
+        purchase
+            history (get)
+            add/checkout (post)
+
+    Admin:
+        update catalog (post)
+        new item to catalog (put)
+        remove (delete)
+
 
     images to azure storage
 
     logging
+        view of item
+        adding an item to the cart
+        buying an item
+        performance
 
     elastic scaling
 

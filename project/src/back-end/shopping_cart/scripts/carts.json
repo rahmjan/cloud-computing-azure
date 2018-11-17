@@ -1,13 +1,9 @@
 {
   "_id": "admin",
-  "products":[
-    {
-    "product_id": 4,
-    "quantity": 2
-    },
-    {
-      "product_id": 1,
+  "5":{
       "quantity": 5
-    }
-  ]
+  },
+  "1":{
+    "quantity": 7
+  }
 }
