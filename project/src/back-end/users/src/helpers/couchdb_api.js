@@ -59,9 +59,21 @@ function ensureAuthenticated (req) {
   })
 }
 
+function getRights (username) {
+    return new Promise((resolve, reject) => {
+        usersDB.get(username, (ko, ok) => {
+            if (ko) {
+                log(ko)
+                reject(ko.reason)
+            } else resolve({ isUser: ok.isUser, isAdmin: ok.isAdmin })
+        })
+    })
+}
+
 module.exports = {
   createUser,
   getUser,
   comparePass,
-  ensureAuthenticated
+  ensureAuthenticated,
+  getRights
 }

@@ -1,10 +1,10 @@
 const log = require('debug')('users-d')
 
-const usersDB = require('nano')(process.env.DB_URL)
+const DB = require('nano')(process.env.DB_URL)
 
-function getCatalog (catalog) {
+function getCart (cart) {
   return new Promise((resolve, reject) => {
-    usersDB.get(catalog, (ko, ok) => {
+      DB.get(cart, (ko, ok) => {
       if (ko) {
         log(ko)
         reject(ko.reason)
@@ -15,5 +15,5 @@ function getCatalog (catalog) {
 }
 
 module.exports = {
-  getCatalog
+    getCart
 }

@@ -1,0 +1,13 @@
+{
+  "_id": "admin",
+  "products":[
+    {
+    "product_id": 4,
+    "quantity": 2
+    },
+    {
+      "product_id": 1,
+      "quantity": 5
+    }
+  ]
+}

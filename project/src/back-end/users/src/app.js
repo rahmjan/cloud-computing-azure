@@ -74,8 +74,12 @@ app.get('/user/authorization/:username/:token', (req, res) => {
   log(`checks wether the token of ${username} is valid`)
   return authHelpers.ensureAuthenticated(req)
     .then(() => {
+      return authHelpers.getRights(username)
+      })
+    .then((rights) => {
       res.status(200).json({
-        status: 'success'
+        status: 'success',
+        rights
       })
     })
     .catch((err) => {

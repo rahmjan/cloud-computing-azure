@@ -8,46 +8,31 @@ const dbHelpers = require('./helpers/couchdb_api')
 
 const app = express.Router()
 
-app.get('', (req, res) => {
+app.get('/cart/:username/:token', (req, res) => {
 
-    log(`Test of catalog`)
-    log(`Test of catalog`)
-    log(`Test of catalog`)
-    log(`Test of catalog`)
-    log(`Test of catalog`)
+    var username = req.params.username
+    var token = req.params.token
 
-    axios.get(`${authUrl}/user/tito/toti`)
-        .then((token) => {
-            res.status(200).json({
-                status: 'success - catalog',
-            })
+    return axios.get(`${authUrl}/user/authorization/${username}/${token}`)
+    .then((response) => {
+        if (!response.data.rights.isUser) {
+            throw new Error(`${username} does not have authority`)
+        }
+        return dbHelpers.getCart(`${username}`)
+    })
+    .then((cart) => {
+        res.status(200).json({
+            status: 'success',
+            cart
         })
-        .catch((msg) => {
-            res.status(500).json({
-                status: 'error - catalog',
-            })
+    })
+    .catch((msg) => {
+        res.status(500).json({
+            status: 'error',
+            message: String(msg)
         })
+    })
 
-    // res.status(200).json({
-    //     status: '!!!!! success - catalog'
-    // })
-})
-
-app.get('/catalog', (req, res) => {
-
-    dbHelpers.getCatalog(`main`)
-        .then((catalog) => {
-            res.status(200).json({
-                status: 'success',
-                catalog
-            })
-        })
-        .catch((msg) => {
-            res.status(500).json({
-                status: 'error',
-                msg
-            })
-        })
 })
 
 module.exports = app
