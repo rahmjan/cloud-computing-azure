@@ -12,7 +12,7 @@
 
         purchase
             history (get) - done
-            add/checkout (post) - test if empty, and user/admin access
+            add/checkout (post) - done
 
     Admin:
         new catalog (put) - done

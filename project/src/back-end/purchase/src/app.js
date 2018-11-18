@@ -39,6 +39,7 @@ app.post('/purchase/:username/:token', (req, res) => {
 
     var username = req.params.username
     var token = req.params.token
+    var product_data = req.body
 
     return axios.get(`${authUrl}/user/authorization/${username}/${token}`)
         .then((response) => {
@@ -57,7 +58,7 @@ app.post('/purchase/:username/:token', (req, res) => {
                 })
         })
         .then((purch) => {
-            // to do
+            purch.purchases.push(product_data)
             return dbHelpers.insertPurchases(purch)
         })
         .then(() => {
