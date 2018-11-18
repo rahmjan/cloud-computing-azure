@@ -3,21 +3,9 @@ const log = require('debug')('users-d')
 
 const authHelpers = require('./helpers/couchdb_api')
 const localAuth = require('./helpers/token_de_en_coders')
+const l = require('./helpers/logging')
 
 const app = express.Router()
-
-app.get('', (req, res) => {
-
-    log(`Test of users`)
-    log(`Test of users`)
-    log(`Test of users`)
-    log(`Test of users`)
-    log(`Test of users`)
-
-    res.status(200).json({
-        status: '!!!!! success - user'
-    })
-})
 
 app.post('/user', (req, res) => {
   var username = req.body.username
