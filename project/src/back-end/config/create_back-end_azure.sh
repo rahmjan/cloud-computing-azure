@@ -55,13 +55,13 @@ done
 
 # Copy data to manager
 echo "### Copy data to manager ..."
-rsync -e "ssh -i ./ssh/rsa_key" -r ./users-application.yml ${USER_NAME}@node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com:./users-application.yml
+rsync -e "ssh -i ./ssh/rsa_key" -r ./swarm_config.yml ${USER_NAME}@node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com:./swarm_config.yml
 rsync -e "ssh -i ./ssh/rsa_key" -r ./elastic_scaling.sh ${USER_NAME}@node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com:./elastic_scaling.sh
-
 
 # Deploying services
 echo "### Deploying services ..."
-ssh -i ./ssh/rsa_key ${USER_NAME}@node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com "docker stack deploy -c ./users-application.yml mySwarm"
+ssh -i ./ssh/rsa_key ${USER_NAME}@node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com "docker stack deploy -c ./swarm_config.yml mySwarm"
+ssh -i ./ssh/rsa_key ${USER_NAME}@node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com "./elastic_scaling.sh &"
 
 # End
 echo "### The swarm leader ip is: ${leader_ip} and address: node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com"
@@ -70,4 +70,4 @@ echo "### The swarm leader ip is: ${leader_ip} and address: node1-${GITHUB_ACC}.
 # node1-rahmjan.francecentral.cloudapp.azure.com
 # ssh -i ./ssh/rsa_key myAdmin@node1-rahmjan.francecentral.cloudapp.azure.com
 #rsync -e "ssh -i ./ssh/rsa_key" -r ./../../../project/src/back-end/ myAdmin@node1-rahmjan.francecentral.cloudapp.azure.com:./back-end/
-#ssh -i ./ssh/rsa_key myAdmin@node1-rahmjan.francecentral.cloudapp.azure.com "docker stack deploy -c ./back-end/users-application.yml mySwarm"
+#ssh -i ./ssh/rsa_key myAdmin@node1-rahmjan.francecentral.cloudapp.azure.com "docker stack deploy -c ./back-end/swarm_config.yml mySwarm"

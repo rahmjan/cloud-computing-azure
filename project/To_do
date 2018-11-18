@@ -27,16 +27,16 @@
         view of item - done (frontend will do this staff)
         adding an item to the cart
         buying an item
-        performance
+        Performance measurements
 
     elastic scaling
         testing
         workload injection
 
     Deployment
-        azure
+        azure - hodit images na dockerHub, upravit swarm config
         local - done
-        local VMs
+        local VMs - done
 
     Documentation
         api
