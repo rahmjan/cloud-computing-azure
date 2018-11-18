@@ -24,7 +24,7 @@
 
     logging
         send username
-        view of item
+        view of item - done (frontend will do this staff)
         adding an item to the cart
         buying an item
         performance
