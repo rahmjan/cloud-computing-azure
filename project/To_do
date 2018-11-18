@@ -34,10 +34,10 @@
         workload injection
 
     Deployment
-        azure - hodit images na dockerHub, upravit swarm config
+        azure - done, almost...
         local - done
         local VMs - done
 
     Documentation
-        api
-        the rest od doc.
+        api + test it again
+        the rest of doc.

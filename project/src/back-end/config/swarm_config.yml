@@ -1,36 +1,6 @@
 version: "3"  # docker-compose version
 services:     # list all services for your application
-  # database of users
-  users-db:
-    # fetch pre-build image from a registry on Docker Hub (https://hub.docker.com/)
-    image: mexicalli/users-db:latest
-    # relative location of Dockerfile
-    build: ../users/src/db
-    # expose port 5984 of host node
-    ports: [ "5984:5984" ]
-    deploy:
-      replicas: 1
-      restart_policy: # restart if something went wrong
-        condition: on-failure
-      placement:
-        constraints:
-          - node.labels.type == daemon
 
-  # server that listens HTTP requests
-  users-daemon:
-    image: mexicalli/users-daemon:latest
-    build: ../users
-    # wait until service db is up
-    depends_on: [ "users-db" ]
-    # expose port 80 of host node
-    ports: [ "80:80" ]
-    deploy:
-      replicas: 1
-      placement:
-        constraints:
-          - node.labels.type == daemon
-
-  # Docker user interface for swarms
   visualizer:
     image: dockersamples/visualizer:stable
     ports: [ "8080:8080" ]
@@ -40,3 +10,103 @@ services:     # list all services for your application
       placement:
         constraints:
           - node.role == manager
+
+  users-db:
+    image: rahmjan/users-db
+    build: ../users/src/db
+    ports: [ "6000:5984" ]
+    logging:
+      driver: "none"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  users-daemon:
+    image: rahmjan/users-daemon
+    build: ../users
+    depends_on: [ "users-db" ]
+    ports: [ "1000:80" ]
+    deploy:
+      replicas: 1
+#      placement:
+#        constraints:
+#        - node.labels.type == daemon
+
+  catalog:
+    image: rahmjan/catalog
+    build: ../catalog
+    depends_on: [ "catalog-db" ]
+    ports: [ "1001:80" ]
+    deploy:
+      replicas: 1
+
+  catalog-db:
+    image: rahmjan/catalog-db
+    build: ../catalog/src/db
+    ports: [ "6001:5984" ]
+    logging:
+      driver: "none"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  shopping_cart:
+    image: rahmjan/shopping_cart
+    build: ../shopping_cart
+    depends_on: [ "shopping_cart-db" ]
+    ports: [ "1002:80" ]
+    deploy:
+      replicas: 1
+
+  shopping_cart-db:
+    image: rahmjan/shopping_cart-db
+    build: ../shopping_cart/src/db
+    ports: [ "6002:5984" ]
+    logging:
+      driver: "none"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  purchase:
+    image: rahmjan/purchase
+    build: ../purchase
+    depends_on: [ "purchase-db" ]
+    ports: [ "1003:80" ]
+    deploy:
+      replicas: 1
+
+  purchase-db:
+    image: rahmjan/purchase-db
+    build: ../purchase/src/db
+    ports: [ "6003:5984" ]
+    logging:
+      driver: "none"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  logging:
+    image: rahmjan/logging
+    build: ../logging
+    depends_on: [ "logging-db" ]
+    ports: [ "1004:80" ]
+    deploy:
+      replicas: 1
+
+  logging-db:
+    image: rahmjan/logging-db
+    build: ../logging/src/db
+    ports: [ "6004:5984" ]
+    logging:
+      driver: "none"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+
