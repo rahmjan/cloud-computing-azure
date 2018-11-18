@@ -6,22 +6,22 @@ GITHUB_ACC=rahmjan  ## you need to change it
 NUM_OF_NODES=2
 
 # Please login
-#az login
-#
-## Resource group
-#az group create --name lingi2145.fr --location francecentral
-#
-## Create VM
-#for i in `seq 1 ${NUM_OF_NODES}`
-#do
-#    az group deployment create --resource-group lingi2145.fr \
-#                               --template-file ./azure-docker-vm.json \
-#                               --parameters "{\"adminUsername\": {\"value\": \"${USER_NAME}\"},
-#                                              \"adminPassword\": {\"value\": \"${ADMIN_PASS}\"},
-#                                              \"gitHubAccount\": {\"value\": \"${GITHUB_ACC}\"},
-#                                              \"dnsNameForPublicIP\": {\"value\": \"node${i}\"},
-#                                              \"sshKeyData\": {\"value\": \"$(cat ./ssh/rsa_key.pub)\"}}"
-#done
+az login
+
+# Resource group
+az group create --name lingi2145.fr --location francecentral
+
+# Create VM
+for i in `seq 1 ${NUM_OF_NODES}`
+do
+    az group deployment create --resource-group lingi2145.fr \
+                               --template-file ./azure-docker-vm.json \
+                               --parameters "{\"adminUsername\": {\"value\": \"${USER_NAME}\"},
+                                              \"adminPassword\": {\"value\": \"${ADMIN_PASS}\"},
+                                              \"gitHubAccount\": {\"value\": \"${GITHUB_ACC}\"},
+                                              \"dnsNameForPublicIP\": {\"value\": \"node${i}\"},
+                                              \"sshKeyData\": {\"value\": \"$(cat ./ssh/rsa_key.pub)\"}}"
+done
 
 # Add key to know_hosts
 for i in `seq 1 ${NUM_OF_NODES}`
