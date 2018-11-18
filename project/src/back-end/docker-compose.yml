@@ -28,13 +28,13 @@ services:     # list all services for your application
 #          - node.labels.type == daemon
 
   # Docker user interface for swarms
-#  visualizer:
-#    image: dockersamples/visualizer:stable
-#    ports: [ "8080:8080" ]
-#    volumes:
-#    - "/var/run/docker.sock:/var/run/docker.sock"
-#    logging:
-#      driver: "none"
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports: [ "8080:8080" ]
+    volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    logging:
+      driver: "none"
 #    deploy:
 #      placement:
 #        constraints:
@@ -76,6 +76,19 @@ services:     # list all services for your application
     image: rahmjan/purchase-db
     build: ./purchase/src/db
     ports: [ "6003:5984" ]
+    logging:
+      driver: "none"
+
+  logging:
+    image: rahmjan/logging
+    build: ./logging/
+    depends_on: [ "logging-db" ]
+    ports: [ "1004:80" ]
+
+  logging-db:
+    image: rahmjan/logging-db
+    build: ./logging/src/db
+    ports: [ "6004:5984" ]
     logging:
       driver: "none"
 

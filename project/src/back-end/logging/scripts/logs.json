@@ -1,0 +1,12 @@
+{
+  "docs": [
+    {
+      "_id": "catalog_07-06-2016_06:38:34:531",
+      "event": "Example: I got message"
+    },
+    {
+      "_id": "catalog_07-06-2016_7:7:7:712",
+      "event": "Example: I got another message"
+    }
+  ]
+}
