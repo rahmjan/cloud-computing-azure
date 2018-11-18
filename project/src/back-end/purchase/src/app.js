@@ -39,21 +39,26 @@ app.post('/purchase/:username/:token', (req, res) => {
 
     var username = req.params.username
     var token = req.params.token
-    var product_id = req.body.product_id
-    var quantity = parseInt(req.body.quantity)
 
     return axios.get(`${authUrl}/user/authorization/${username}/${token}`)
         .then((response) => {
             if (!response.data.rights.isUser) {
                 throw new Error(`${username} does not have authority`)
             }
-            return dbHelpers.getCart(`${username}`)
+            return dbHelpers.getPurchases(`${username}`)
+                .catch((msg) => {
+                    if (msg == `missing`)
+                    {
+                        var newPurch = {}
+                        newPurch._id = username
+                        return newPurch
+                    }
+                    else { throw msg }
+                })
         })
-        .then((cart) => {
-            var element = {}
-            element.quantity = quantity
-            cart[product_id] = element
-            return dbHelpers.insertCart(cart)
+        .then((purch) => {
+            // to do
+            return dbHelpers.insertPurchases(purch)
         })
         .then(() => {
                 res.status(200).json({

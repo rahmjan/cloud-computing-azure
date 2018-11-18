@@ -64,6 +64,15 @@ app.post('/catalog/:username/:token', (req, res) => {
                 throw new Error(`${username} does not have authority`)
             }
             return dbHelpers.getCatalog(`main`)
+                .catch((msg) => {
+                    if (msg == `missing`)
+                    {
+                        var newCat = {}
+                        newCat._id = `main`
+                        return newCat
+                    }
+                    else { throw msg }
+                })
         })
         .then((cart) => {
             for(var key in product_data)

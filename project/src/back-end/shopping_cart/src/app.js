@@ -48,6 +48,15 @@ app.post('/cart/:username/:token', (req, res) => {
                 throw new Error(`${username} does not have authority`)
             }
             return dbHelpers.getCart(`${username}`)
+                .catch((msg) => {
+                    if (msg == `missing`)
+                    {
+                        var newCar = {}
+                        newCar._id = username
+                        return newCar
+                    }
+                    else { throw msg }
+                })
         })
         .then((cart) => {
             var element = {}
@@ -81,6 +90,15 @@ app.delete('/cart/:username/:token', (req, res) => {
                 throw new Error(`${username} does not have authority`)
             }
             return dbHelpers.getCart(`${username}`)
+                .catch((msg) => {
+                    if (msg == `missing`)
+                    {
+                        var newCar = {}
+                        newCar._id = username
+                        return newCar
+                    }
+                    else { throw msg }
+                })
         })
         .then((cart) => {
             delete cart[product_id]

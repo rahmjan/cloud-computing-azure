@@ -7,12 +7,12 @@
     User:
         cart
             history (get) - done
-            add (post) - done  - test if empty
+            add (post) - done
             remove (delete) - done
 
         purchase
             history (get) - done
-            add/checkout (post)
+            add/checkout (post) - test if empty, and user/admin access
 
     Admin:
         new catalog (put) - done
