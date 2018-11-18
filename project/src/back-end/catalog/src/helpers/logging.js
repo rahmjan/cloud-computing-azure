@@ -5,7 +5,7 @@ const logUrl = 'http://logging:80'
 function serv_log(message) {
 
     var data = {}
-    data._id = "users"
+    data._id = "catalog"
     data.event = message
 
     return axios.post(`${logUrl}/log`, data)

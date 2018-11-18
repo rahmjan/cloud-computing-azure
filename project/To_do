@@ -23,11 +23,11 @@
     images to azure storage
 
     logging
-        send username
+        send username - done
         view of item - done (frontend will do this staff)
-        adding an item to the cart
-        buying an item
-        Performance measurements
+        adding an item to the cart - done
+        buying an item - done
+        Performance measurements - done
 
     elastic scaling
         testing

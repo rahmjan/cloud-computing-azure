@@ -8,10 +8,10 @@ const app = express.Router()
 
 app.post('/log', (req, res) => {
 
-    var myDate = d.dateFormat('dd-mm-yyyy_HH:MM:ss:L')
+    var myDate = d.dateFormat('yyyy-mm-dd_HH:MM:ss:L')
 
     var logVar = {}
-    logVar._id = req.body.id + `_` + myDate
+    logVar._id = req.body._id + `_` + myDate
     logVar.event = req.body.event
 
     return dbHelpers.insertLog(logVar)
