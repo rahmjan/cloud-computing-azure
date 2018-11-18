@@ -23,16 +23,21 @@
     images to azure storage
 
     logging
+        send username
         view of item
         adding an item to the cart
         buying an item
         performance
 
     elastic scaling
+        testing
+        workload injection
 
     Deployment
         azure
-        local
+        local - done
         local VMs
 
     Documentation
+        api
+        the rest od doc.
