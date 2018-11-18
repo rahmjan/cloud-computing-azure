@@ -1,6 +1,6 @@
 USER_NAME=myAdmin
 ADMIN_PASS=Admin1234
-GITHUB_ACC=tanguytlc  ## you need to change it
+GITHUB_ACC=rahmjan  ## you need to change it
 
 ### Create azure back-end ###
 NUM_OF_NODES=2
@@ -22,11 +22,6 @@ do
                                               \"dnsNameForPublicIP\": {\"value\": \"node${i}\"},
                                               \"sshKeyData\": {\"value\": \"$(cat ./ssh/rsa_key.pub)\"}}"
 done
-
-# node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com
-# node1-rahmjan.francecentral.cloudapp.azure.com
-# ssh -i ./ssh/rsa_key ${USER_NAME}@node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com
-# ssh -i ./ssh/rsa_key myAdmin@node1-rahmjan.francecentral.cloudapp.azure.com
 
 # Add key to know_hosts
 for i in `seq 1 ${NUM_OF_NODES}`
@@ -60,15 +55,19 @@ done
 
 # Copy data to manager
 echo "### Copy data to manager ..."
-rsync -e "ssh -i ./ssh/rsa_key" -r ./../../../project/src/back-end/ ${USER_NAME}@node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com:./back-end/
-#rsync -e "ssh -i ./ssh/rsa_key" -r ./../../../project/src/back-end/ ${USER_NAME}@node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com:./back-end/
+rsync -e "ssh -i ./ssh/rsa_key" -r ./users-application.yml ${USER_NAME}@node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com:./users-application.yml
+rsync -e "ssh -i ./ssh/rsa_key" -r ./elastic_scaling.sh ${USER_NAME}@node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com:./elastic_scaling.sh
 
-#rsync -e "ssh -i ./ssh/rsa_key" -r ./../../../project/src/back-end/ myAdmin@node1-rahmjan.francecentral.cloudapp.azure.com:./back-end/
 
 # Deploying services
 echo "### Deploying services ..."
-ssh -i ./ssh/rsa_key ${USER_NAME}@node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com "docker stack deploy -c ./back-end/users-application.yml authentication"
-#ssh -i ./ssh/rsa_key myAdmin@node1-rahmjan.francecentral.cloudapp.azure.com "docker stack deploy -c ./back-end/users-application.yml authentication"
+ssh -i ./ssh/rsa_key ${USER_NAME}@node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com "docker stack deploy -c ./users-application.yml mySwarm"
 
 # End
 echo "### The swarm leader ip is: ${leader_ip} and address: node1-${GITHUB_ACC}.francecentral.cloudapp.azure.com"
+
+
+# node1-rahmjan.francecentral.cloudapp.azure.com
+# ssh -i ./ssh/rsa_key myAdmin@node1-rahmjan.francecentral.cloudapp.azure.com
+#rsync -e "ssh -i ./ssh/rsa_key" -r ./../../../project/src/back-end/ myAdmin@node1-rahmjan.francecentral.cloudapp.azure.com:./back-end/
+#ssh -i ./ssh/rsa_key myAdmin@node1-rahmjan.francecentral.cloudapp.azure.com "docker stack deploy -c ./back-end/users-application.yml mySwarm"
