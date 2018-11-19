@@ -6,11 +6,10 @@ SSH_KEY=./ssh/rsa_key
 GITHUB_ACC=rahmjan
 NUM_OF_NODES=2
 
-["ns1"]="fd00:300:3:1000::1"
-
-SERVICES=(users-daemon users-db catalog catalog-db \
-          shopping_cart shopping_cart-db logging logging-db \
-          purchase purchase-db)
+declare -A SERVICES
+SERVICES=(["users-daemon"]="1" ["users-db"]="1" ["catalog"]="1" ["catalog-db"]="1" \
+          ["shopping_cart"]="1" ["shopping_cart-db"]="1" ["logging"]="1" ["logging-db"]="1" \
+          ["purchase"]="1" ["purchase-db"]="1")
 
 # Add key to know_hosts
 for i in `seq 1 ${NUM_OF_NODES}`
@@ -21,7 +20,7 @@ done
 # Check CPU
 while true
 do
-    for service in "${!SERVICES[@]}"
+    for service in "${SERVICES[@]}"
     do
         cpu_usage=0
         scale_to=0
@@ -48,9 +47,9 @@ do
             scale_to=9
         fi
 
-        echo "HERE: ${SERVICES[service]}"
         if (( "${SERVICES[$service]}" != "${scale_to}" ))
         then
+            SERVICES[$service]=${scale_to}
             echo "${service}: ${cpu_usage}% cpu, scale to number of services: ${scale_to}"
             docker service scale mySwarm_${service}=${scale_to} 1> /dev/null
         fi
