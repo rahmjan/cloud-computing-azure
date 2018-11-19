@@ -30,11 +30,12 @@
         Performance measurements - done
 
     elastic scaling
+        script - done
         testing
         workload injection
 
     Deployment
-        azure - done, almost...
+        azure - done - mozna udelat znova
         local - done
         local VMs - done
 

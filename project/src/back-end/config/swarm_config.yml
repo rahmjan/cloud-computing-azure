@@ -29,9 +29,6 @@ services:     # list all services for your application
     ports: [ "1000:80" ]
     deploy:
       replicas: 1
-#      placement:
-#        constraints:
-#        - node.labels.type == daemon
 
   catalog:
     image: rahmjan/catalog
