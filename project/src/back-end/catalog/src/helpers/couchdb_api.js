@@ -27,6 +27,6 @@ function insertCatalog (catal) {
 }
 
 module.exports = {
-  getCatalog,
+    getCatalog,
     insertCatalog
 }
