@@ -30,12 +30,10 @@ done
 # Copy data to manager
 echo "### Copy data to manager ..."
 docker-machine scp -r -d ./swarm_config.yml node1:./swarm_config.yml 1> /dev/null
-#docker-machine scp -r -d ./elastic_scaling.sh node1:./elastic_scaling.sh 1> /dev/null
 
 # Deploying services
 echo "### Deploying services ..."
 docker-machine ssh node1 "docker stack deploy -c ./back-end/swarm_config.yml mySwarm"
-#docker-machine ssh node1 "./elastic_scaling.sh &"
 
 # End
 echo "### The swarm leader ip is: ${leader_ip}"
