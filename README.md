@@ -29,6 +29,6 @@ Each service is written in *javascript* and uses the *CouchDB* database.
 - **Catalog** - Stores catalog of products and allows its change.
 
 For more details or API of services you can find in *README.md* file
-of their respective source folder in `./project/src/back-end/[service]`.
+of their respective source folders in `./project/src/back-end/[service]`.
 
 
