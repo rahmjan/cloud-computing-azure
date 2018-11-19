@@ -47,20 +47,21 @@ do
 
         for i in `seq 1 ${NUM_OF_NODES}`
         do
-            value=$(echo "${SERVICES_OF_NODE[$i]}" | grep "${service} " | awk '{sum += $3} END {print sum}')
+            value=$(echo "${SERVICES_OF_NODE[$i]}" | grep "${service}." | awk '{sum += $3} END {print sum}')
             cpu_usage=$(echo "${cpu_usage} ${value}" | awk '{print $1 + $2}')
         done
 
         cpu_usage=$(echo "${cpu_usage} ${NUM_OF_NODES}" | awk '{print $1 / $2}')
+        echo "${service}: ${cpu_usage}% cpu"
 
         # Big Switch
         if (( $(echo "5 > $cpu_usage" | bc -l) ))
         then
             scale_to=1
-        elif (( $(echo "10 > $cpu_usage" | bc -l) ))
+        elif (( $(echo "15 > $cpu_usage" | bc -l) ))
         then
             scale_to=3
-        elif (( $(echo "20 > $cpu_usage" | bc -l) ))
+        elif (( $(echo "30 > $cpu_usage" | bc -l) ))
         then
             scale_to=6
         else

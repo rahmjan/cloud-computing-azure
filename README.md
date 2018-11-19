@@ -17,3 +17,9 @@ The code must contain:
 all microservices under explicit folder names;
 all scripts required to deploy and run the back-end, including configuration scripts for Azure using the command line interface or the programmable API (if you did not use these, there must be a HOW-TO explaining what to do on the web interface, but this is less convenient);
 proper comments and presentation (indenting, no dead or commented code, etc.).
+
+Your deliverable must include:
+
+The code for each microservice, the Docker configuration files and any script allowing its easy deployment;
+Instructions on the necessary Azure setup (or even better, a script performing those automatically);
+Each microservice must be described in the README.md file of its source folder, including its role, limitations, and its complete API specification.
