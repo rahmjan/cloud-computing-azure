@@ -21,6 +21,8 @@
 
 
     images to azure storage
+        Product images are stored in a Azure blob and the front-end uses the URIs to download the images with HTTP GET calls.
+        The administrator interface allows registering new products and associated images.
 
     logging
         send username - done
