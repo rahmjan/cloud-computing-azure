@@ -43,10 +43,10 @@ SAS=$(az storage blob generate-sas \
                 --account-key ${blobStorageAccountKey} \
                 --container-name images \
                 --name ${IMAGE} \
-                --permissions rcwd \
-                --expiry 2020-05-15)
+                --permissions acdrw \
+                --expiry 2020-05-15 )
 
-#sp=rcwd&st=2018-11-20T11:39:58Z&se=2020-11-20T19:39:58Z&spr=https&sv=2017-11-09&sig=5DNwRT7Q4STZ%2B8NE4FiGEw0TSYsEJ2v49pwdsvIBjk4%3D&sr=b
+SAS=$(echo $SAS | tr -d '"')
 
 # Upload
 echo "### Uploading..."

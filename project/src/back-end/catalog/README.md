@@ -58,8 +58,9 @@ SAS=$(az storage blob generate-sas \
                 --account-key $blobStorageAccountKey \
                 --container-name images \
                 --name ${IMAGE} \
-                --permissions rcwd \
+                --permissions acdrw \
                 --expiry 2020-05-15)
+SAS=$(echo $SAS | tr -d '"')
 ``` 
 Upload: 
 ```
