@@ -33,7 +33,7 @@ docker-machine scp -r -d ./swarm_config.yml node1:./swarm_config.yml 1> /dev/nul
 
 # Deploying services
 echo "### Deploying services ..."
-docker-machine ssh node1 "docker stack deploy -c ./back-end/swarm_config.yml mySwarm"
+docker-machine ssh node1 "docker stack deploy -c ./swarm_config.yml mySwarm"
 
 # End
 echo "### The swarm leader ip is: ${leader_ip}"

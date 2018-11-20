@@ -39,3 +39,36 @@ Delete item:
 
 Delete category:  
 `curl -X DELETE -d "category=Fruits" ${SERVICE_ADDRESS}:1001/catalog/${USER_NAME}/${TOKEN}`
+
+#### How to upload image to Azure Blob
+Log to Azure: 
+```
+az login
+```  
+Get key:
+```
+blobStorageAccountKey=$(az storage account keys list -g lingi2145.fr \
+                        -n myblob9 --query [0].value --output tsv)
+```
+Create SAS: 
+```
+IMAGE=[name of image]
+SAS=$(az storage blob generate-sas \
+                --account-name myblob9 \
+                --account-key $blobStorageAccountKey \
+                --container-name images \
+                --name ${IMAGE} \
+                --permissions rw \
+                --expiry 2020-05-31)
+``` 
+Upload: 
+```
+H1="x-ms-date: $(date -u)"
+H2="x-ms-blob-type: BlockBlob"
+BLOB_ADDRESS=https://myblob9.blob.core.windows.net
+curl -X PUT -T ${IMAGE} -H "${H1}" -H "${H2}" "${BLOB_ADDRESS}/images/${IMAGE}?${SAS}"
+``` 
+Download:
+```
+curl -X GET "${BLOB_ADDRESS}/images/${IMAGE}" --output myDownloadedImage.jpg
+``` 

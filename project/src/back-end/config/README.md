@@ -1,17 +1,15 @@
 # Configuration
 
-visualizer:8080, test of scal
-
-the description of a provided script that builds all containers automatically
-
 #### Local
 
 
 #### Local VMs
-
+visualizer:8080
 
 #### Azure
 
+
+**Blob** - How to [upload image](../catalog/README.md).
 
 #### Elastic scaling
 

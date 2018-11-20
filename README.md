@@ -14,7 +14,8 @@ We created tree scripts for deployment of back-end:
               How to deploy: `make azure`.
 
 All configurations is located in folder `./project/src/back-end/config/`.  
-The **Makefile** you can find in `./project/`.
+The **Makefile** you can find in `./project/`.  
+To clean project and destroy VMs: `make [build_script]-clean`.
 
 #### Technology
 
@@ -30,5 +31,3 @@ Each service is written in *javascript* and uses the *CouchDB* database.
 
 For more details or API of services you can find in *README.md* file
 of their respective source folders in `./project/src/back-end/[service]`.
-
-
