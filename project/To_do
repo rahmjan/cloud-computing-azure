@@ -15,14 +15,14 @@
             add/checkout (post) - done
 
     Admin:
-        new catalog (put) - done
+        new catalog (post) - done
         update catalog (post) - done
         remove (delete) - done
 
 
     images to azure storage
         Product images are stored in a Azure blob and the front-end uses the URIs to download the images with HTTP GET calls. - done
-        The administrator interface allows registering new products and associated images.
+        The administrator interface allows registering new products and associated images. - maybe done
 
     logging
         send username - done
@@ -43,5 +43,5 @@
 
     Documentation
         api + test it again - done
-        the rest of doc.
-            azure storage - upload
+        the rest of doc. - done
+        azure storage - done

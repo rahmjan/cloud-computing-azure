@@ -20,6 +20,8 @@ To clean project and destroy VMs: `make [build_script]-clean`.
 #### Technology
 
 Each service is written in *javascript* and uses the *CouchDB* database.
+The *CouchDB* was selected because it natively supports *JSON* format and it has *REST* API for its control.
+The *admin* identity for database is `admin` with password `admin`.
 
 #### Services
 
