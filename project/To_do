@@ -37,10 +37,10 @@
         workload injection - done
 
     Deployment
-        azure - done - mozna udelat znova, otestovat send log
+        azure - done
         local - done
         local VMs - done
 
     Documentation
-        api + test it again
+        api + test it again - done
         the rest of doc.

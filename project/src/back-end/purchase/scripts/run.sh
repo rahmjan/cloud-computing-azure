@@ -30,5 +30,3 @@ add_purchases &
 echo "Launch service"
 npm start
 
-### Structure of DB
-

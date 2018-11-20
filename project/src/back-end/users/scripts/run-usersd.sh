@@ -31,19 +31,3 @@ add_users &
 # Launch
 echo "Launch service deamon"
 npm start
-
-
-### Structure of DB
-#{
-#  _id: "name",
-#  password: "hash",
-#  isUser: true,
-#  isAdmin: false
-#}
-
-# How to register users to database
-#JSON_DOC='{"_id": "rahmjan", "event": "watch-tv", "password": "123456"}'
-#curl -X POST --data "${JSON_DOC}" -H "Content-Type: application/json" http://localhost:6000/users
-
-#DATA='{"username": "tito", "password": "toti"}'
-#curl -X POST --data "$DATA" -H "Content-Type: application/json" http://localhost:1000/user

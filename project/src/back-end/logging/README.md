@@ -1,26 +1,28 @@
-# Users service
+# Logging service
 
-This service can register, authenticate and authorize the users. 
+This service stores logs from other services.  
+When it is created it will insert simple *logs* to the database.
+Example of *logs* you can find in file `./scripts/logs.json`
 
-Port to access: `1000`  
-Port to database: `1001`
+Port to access: `1004`  
+Port to database: `6004`
 
 #### API
 | Method | Uniform Resource Name (URN) | Required  parameters | Output | Description |
 |:------:|:-----------------------------|:-------------------------------------:|:--------------------:|:--------------------------------------------------|
-| POST | /user | username=[string] & password=[string] & isUser=[bool] & isAdmin=[bool] | Authentication token | Register a new user |
-| GET | /user/:username/:password | - | Authentication token | Log in a user |
-| GET | /user/authorization/:username/:token | - | Rights | Get the rights of user (user, admin)|
+| POST | /log | _id=[string] & event=[string] | - | Send log |
+
 
 #### Example
-`SERVICE_ADDRESS=localhost`  
-`TOKEN=[insert token]`
+```
+SERVICE_ADDRESS=localhost
+```
 
-Register a new user:  
-`curl -X POST -d "username=tito2&password=toti2&isUser=true&isAdmin=false" ${SERVICE_ADDRESS}:1000/user`
+Send log:  
+`curl -X POST -d "_id=Who_send_it&event=What_happened" ${SERVICE_ADDRESS}:1004/log`
 
-Log in:  
-`curl -X GET ${SERVICE_ADDRESS}:1000/user/tito2/toti2`
-
-Authorization:  
-`curl -X GET ${SERVICE_ADDRESS}:1000/user/authorization/tito2/${TOKEN}`
+#### List of logged items
+- Performance measurements - How long it take to answer a request.
+- Who is calling the service.
+- If call was successful or not.
+- What user is doing.

@@ -32,40 +32,6 @@ app.get('/catalog', (req, res) => {
     l.serv_log("Call to get_catalog took " + (t1 - t0) + " milliseconds.")
 })
 
-app.put('/catalog/:username/:token', (req, res) => {
-    var t0 = new Date().getTime()
-
-    var username = req.params.username
-    var token = req.params.token
-    var catalog = req.body.catalog
-
-    l.serv_log(`Put catalog: ${username} - new catalog: ${catalog}`)
-
-    axios.get(`${authUrl}/user/authorization/${username}/${token}`)
-    .then((response) => {
-        if (!response.data.rights.isAdmin) {
-            throw new Error(`${username} does not have authority`)
-        }
-        return dbHelpers.insertCatalog(catalog)
-    })
-    .then(() => {
-        res.status(200).json({
-            status: 'success'
-        })
-        l.serv_log(`Put catalog: ${username} - successful`)
-    })
-    .catch((msg) => {
-        res.status(500).json({
-            status: 'error',
-            message: String(msg)
-        })
-        l.serv_log(`Put catalog: ${username} - error: ${String(msg)}`)
-    })
-
-    var t1 = new Date().getTime()
-    l.serv_log("Call to put_catalog took " + (t1 - t0) + " milliseconds.")
-})
-
 app.post('/catalog/:username/:token', (req, res) => {
     var t0 = new Date().getTime()
 

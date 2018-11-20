@@ -29,12 +29,3 @@ add_carts &
 # Launch
 echo "Launch service"
 npm start
-
-### Structure of DB
-#{
-#  "_id": "user-name",
-#  "product_id":{
-#    "quantity": 2
-#    }
-#}
-
