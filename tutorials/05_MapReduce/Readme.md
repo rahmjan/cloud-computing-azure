@@ -125,7 +125,7 @@ Between these, a **_sum** function is also given (there are also **_count** and 
 Try to change the reduce function from the current `CUSTOM` implementation to the built in `_sum`, and repeat the curl command above.
 You will get exactly the same output!
 
-## :notebook: Exercise: computing the ranking of movie categories
+## :pencil2: Exercise: computing the ranking of movie categories
 
 To accomplish your next mission as member of NEMO, you will need to extrapolate which movie genres the users prefer the most by calculating the average rating of movies falling in each category.
 
@@ -151,7 +151,7 @@ Take a look in the `movielens_init_db` folder of this tutorial. You will notice 
 
 You can add your map/reduce views in this file and make them readily available in your CouchDB deployement.
 
-### :notebook: Exercise: add your `ranking` query to the CouchDB deployment
+### :pencil2: Exercise: add your `ranking` query to the CouchDB deployment
 
 1. Modify the `user_queries.js` file by adding your map/reduce job implemented before.
 1. Rebuild the `movielens_init_db` container.
