@@ -1,6 +1,6 @@
 # Building procedure for projects: KMeans and Twitter
 
-We use maven as the build system.
+We use [Apache Maven](https://maven.apache.org/) to build both projects.
 Maven is already installed on the VM and you don't need to install it.
 
 1. Once you go to the root directory of each application, build via: `mvn package`.
