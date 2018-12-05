@@ -7,7 +7,7 @@ In this second part we will leverage the availability of this information to add
 
 :warning:
 As mentioned in the previous project, the second part of the project accounts for 40% of the final project grade.
-The grading requirements and details are available [in the same file as for the first project](Grading.md#Second-deliverable:-recommendation-service).
+The grading requirements and details are available [in the same file as for the first project](Grading.md#Second-deliverable-recommendation-service).
 
 ## Your mission
 
