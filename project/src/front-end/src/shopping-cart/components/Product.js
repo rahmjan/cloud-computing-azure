@@ -35,7 +35,8 @@ class Product extends Component {
       quickViewProduct: {
         image: this.props.image,
         name: this.props.name,
-        price: this.props.price
+        price: this.props.price,
+				bestSellers: this.props.bestSellers
       }
     }, function () {
       this.props.openModal(this.state.quickViewProduct)
@@ -49,7 +50,8 @@ class Product extends Component {
         price: this.props.price,
         id: this.props.id,
         category: this.props.category,
-        quantity: quantity
+        quantity: quantity,
+				bestSellers: this.props.bestSellers
       }
     })
   }

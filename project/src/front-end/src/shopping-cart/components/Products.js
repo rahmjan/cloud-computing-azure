@@ -3,8 +3,21 @@ import Product from './Product'
 import LoadingProducts from '../loaders/Products'
 import NoResults from '../empty-states/NoResults'
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
+import RecommendationService from '../../interfaces/RecommendationService'
 
 class Products extends Component {
+	constructor(props){
+		super(props)
+		this.state = {
+			bestSellers: [],
+			recService: new RecommendationService()
+		}
+		this.state.recService.setHandlers(
+			(bestSellers) => { this.setState({ bestSellers: bestSellers }) }
+		)
+		this.state.recService.fetchBestSellers()
+
+	}
   render () {
     let term = this.props.searchTerm
     let productsData = []
@@ -24,7 +37,7 @@ class Products extends Component {
           <Product key={item.id} price={item.price} name={item.name}
             image={item.image} id={item.id} category={item.category}
             addToCart={this.props.addToCart} openModal={this.props.openModal}
-            authenticated={this.props.authenticated}
+            authenticated={this.props.authenticated} bestSellers={this.state.bestSellers}
           />
         )
       }
