@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import NoResults from '../empty-states/NoResults'
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
 class QuickView extends Component {
   componentWillUnmount () {
@@ -14,6 +16,33 @@ class QuickView extends Component {
     let name = product.name
     let image = product.image
     let price = product.price
+		let bestSellers = product.bestSellers
+		let bsList = []
+		let view
+		if(bestSellers){
+			for(var i = 0; i < bestSellers.length; i++){
+				bsList.push(
+					<div className='product' key={bestSellers[i].name}>
+						<h4 className='product-name'>{bestSellers[i].name}<br />{bestSellers[i].price} €/kg</h4>
+						<div className='product-image'>
+							<img src={bestSellers[i].image} alt={bestSellers[i].name} />
+						</div>
+						<button type='button' className='search-button' >
+	            {/* {this.state.buttonLabel} */}
+	          </button>
+					</div>
+				)
+			}
+			view = <CSSTransitionGroup
+        className='products'
+        transitionName='fadeIn'
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={300} component='div'>
+        {bsList}
+      </CSSTransitionGroup>
+		}else{
+			view = <NoResults />
+		}
     return (
       <div className={this.props.openModal ? 'modal-wrapper active' : 'modal-wrapper'}>
         <div className='modal' ref='modal'>
@@ -31,7 +60,7 @@ class QuickView extends Component {
             <p>TODO: write down small description...</p>
             <br />
             <h3>Customers who bought this item also bought</h3>
-            <p>TODO: fetch recommendations</p>
+            {view}
           </center>
         </div>
       </div>

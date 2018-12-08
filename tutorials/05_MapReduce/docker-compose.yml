@@ -1,0 +1,23 @@
+version: "3"
+services:
+  ml_db:
+    # we use CouchDB image of authentication service
+    image: mexicalli/users-db
+    # or in canse you want to build yours
+    # build: ./movielens_db
+    ports:
+      - 5984:5984
+  init_ml_db:
+    build: ./movielens_init_db
+    depends_on:
+      - ml_db
+    command: ./wait-for-couchdb.sh
+  ml_plotter:
+    image: mexicalli/movielens_ml_plotter
+    # uncomment in case you want to build
+    # build: ./movielens_plotter
+    depends_on:
+      - ml_db
+    command: ./plot.sh
+    volumes:
+      - "./plots:/usr/app/plots"
