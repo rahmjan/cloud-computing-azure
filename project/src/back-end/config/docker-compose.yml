@@ -66,3 +66,16 @@ services:     # list all services for your application
     logging:
       driver: "none"
 
+  recomm:
+    image: rahmjan/recomm
+    build: ../recomm
+    depends_on: [ "logging-db" ]
+    ports: [ "1005:80" ]
+
+  recomm-db:
+    image: rahmjan/recomm-db
+    build: ../recomm/src/db
+    ports: [ "6005:5984" ]
+    logging:
+      driver: "none"
+

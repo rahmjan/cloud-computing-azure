@@ -106,4 +106,23 @@ services:     # list all services for your application
       restart_policy:
         condition: on-failure
 
+  recomm:
+    image: rahmjan/recomm
+    build: ../recomm
+    depends_on: [ "logging-db" ]
+    ports: [ "1005:80" ]
+    deploy:
+      replicas: 1
+
+  recomm-db:
+    image: rahmjan/recomm-db
+    build: ../recomm/src/db
+    ports: [ "6005:5984" ]
+    logging:
+      driver: "none"
+    deploy:
+      replicas: 1
+    restart_policy:
+      condition: on-failure
+
 
