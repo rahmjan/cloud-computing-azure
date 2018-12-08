@@ -12,6 +12,7 @@ app.post('/log', (req, res) => {
 
     var logVar = {}
     logVar._id = req.body._id + `_` + myDate
+    logVar.date = myDate
     logVar.event = req.body.event
 
     return dbHelpers.insertLog(logVar)

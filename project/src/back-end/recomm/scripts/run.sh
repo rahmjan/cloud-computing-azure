@@ -26,6 +26,9 @@ echo "Database [${DB_NAME}] created !"
 # Add recomms
 add_recomms &
 
+# Run recommendation
+./scripts/recomm_service.sh &
+
 # Launch
 echo "Launch service"
 npm start
