@@ -7,11 +7,13 @@ const usersDB = require('nano')(process.env.DB_URL)
 function createUser (req) {
   var username = req.body.username
   var password = req.body.password
+  var isUser = req.body.isUser
+  var isAdmin = req.body.isAdmin
   log('createUser()')
   const salt = bcrypt.genSaltSync()
   const hash = bcrypt.hashSync(password, salt)
   return new Promise((resolve, reject) => {
-    usersDB.insert({ password: hash }, username, (ko, ok) => {
+    usersDB.insert({ password: hash, isUser: isUser, isAdmin:isAdmin }, username, (ko, ok) => {
       if (ko) {
         log(ko)
         reject(ko.reason)
@@ -57,9 +59,21 @@ function ensureAuthenticated (req) {
   })
 }
 
+function getRights (username) {
+    return new Promise((resolve, reject) => {
+        usersDB.get(username, (ko, ok) => {
+            if (ko) {
+                log(ko)
+                reject(ko.reason)
+            } else resolve({ isUser: ok.isUser, isAdmin: ok.isAdmin })
+        })
+    })
+}
+
 module.exports = {
   createUser,
   getUser,
   comparePass,
-  ensureAuthenticated
+  ensureAuthenticated,
+  getRights
 }

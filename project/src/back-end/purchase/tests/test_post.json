@@ -1,0 +1,11 @@
+{
+    "date": "99-99-9999 99:99:99",
+    "totalPrice": 999,
+    "99": {
+      "quantity": 999,
+      "name": "Jablko",
+      "image": "test",
+      "price": 99,
+      "totalPrice": 99
+    }
+}

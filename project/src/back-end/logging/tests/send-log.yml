@@ -1,0 +1,13 @@
+config:
+  target: http://node1-rahmjan.francecentral.cloudapp.azure.com:1004
+  phases:
+    - duration: 120
+      arrivalRate: 20
+
+scenarios:
+  - flow:
+    - post:
+        url: /log
+        json:
+          _id: "{{ test }}"
+          event: "{{ example text }}"
