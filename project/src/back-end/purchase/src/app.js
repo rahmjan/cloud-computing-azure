@@ -74,7 +74,7 @@ app.post('/purchase/:username/:token', (req, res) => {
             res.status(200).json({
             status: 'success'
         })
-        l.serv_log(`Add purchase: ${username} - successful`)
+        l.serv_log(`Add purchase: ${username} - successful`, product_data)
     })
     .catch((msg) => {
         res.status(500).json({

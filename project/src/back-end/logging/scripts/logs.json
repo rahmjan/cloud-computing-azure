@@ -2,11 +2,47 @@
   "docs": [
     {
       "_id": "catalog_2016-06-07_06:38:34:53",
-      "event": "Example: I got message"
+      "date": "2016-06-07_06:38:34:53",
+      "service": "catalog",
+      "message": "Example: I got message",
+      "jsonData": null
     },
     {
       "_id": "catalog_2016-06-07_7:7:7:71",
-      "event": "Example: I got another message"
+      "date": "2016-06-07_7:7:7:71",
+      "service": "catalog",
+      "message": "Example: I got another message",
+      "jsonData": null
+    },
+    {
+      "_id": "purchase_2016-06-07_7:7:7:71",
+      "date": "2016-06-07_7:7:7:71",
+      "service": "purchase",
+      "message": "Example: My 1.purchase",
+      "jsonData": {
+        "date": "07-06-2016 06:38:34",
+        "totalPrice": 10089,
+        "65": {
+          "quantity": 25,
+          "name": "Jablko",
+          "image": "test",
+          "price": 40,
+          "totalPrice": 60
+        },
+        "8": {
+          "quantity": 71,
+          "name": "Hruska",
+          "image": "test2",
+          "price": 20,
+          "totalPrice": 62
+        }
+      }
+    },
+    {
+      "_id": "purchase_77777777",
+      "date": "2016-06-07_777777777",
+      "service": "purchase",
+      "message": "Example: My 1.purchase"
     }
   ]
 }

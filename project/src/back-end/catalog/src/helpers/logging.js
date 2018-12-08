@@ -6,7 +6,7 @@ function serv_log(message) {
 
     var data = {}
     data._id = "catalog"
-    data.event = message
+    data.message = message
 
     return axios.post(`${logUrl}/log`, data)
 }

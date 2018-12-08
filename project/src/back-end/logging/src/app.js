@@ -13,7 +13,9 @@ app.post('/log', (req, res) => {
     var logVar = {}
     logVar._id = req.body._id + `_` + myDate
     logVar.date = myDate
-    logVar.event = req.body.event
+    logVar.service = req.body._id
+    logVar.message = req.body.message
+    logVar.jsonData = req.body.jsonData
 
     return dbHelpers.insertLog(logVar)
     .then(() => {
