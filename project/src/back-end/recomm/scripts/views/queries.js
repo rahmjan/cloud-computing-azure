@@ -10,7 +10,15 @@ const viewDescriptor = {
           {\
             if ( key != \"date\" && key != \"totalPrice\" )\
             {\
-              emit(key, {count: 3}); \
+            \
+              for(var key2 in doc.jsonData) \
+              {\
+                if ( key2 != \"date\" && key2 != \"totalPrice\" && key2 != key ) \
+                {\
+                  emit(key, {product: key2.toString(), quantity: doc.jsonData[key2].quantity}); \
+                }\
+              }\
+            \
             }\
           }\
         } \
@@ -18,10 +26,15 @@ const viewDescriptor = {
 
       "reduce": "function(key, values) { \
         var count = 0; \
+\
+        \
         for(var i = 0; i < values.length; i++)\
         {\
-          count = values[i].count\
+          \
         }\
+        \
+        \
+        \
         return(key, {count: count});\
       }"
     }
