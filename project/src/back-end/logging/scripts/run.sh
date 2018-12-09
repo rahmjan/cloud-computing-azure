@@ -15,9 +15,6 @@ add_logs () {
 # Treat unset variables as an error
 set -o nounset
 
-# For recommendation service
-curl -X DELETE ${DB_URL}
-
 # Create Database
 echo "Wait until the CouchDB deamon starts and create database: ${DB_NAME}."
 until curl -X PUT ${DB_URL} ; do
@@ -25,6 +22,10 @@ until curl -X PUT ${DB_URL} ; do
   sleep 1
 done
 echo "Database [${DB_NAME}] created !"
+
+# For recommendation service
+curl -X DELETE ${DB_URL}
+curl -X PUT ${DB_URL}
 
 # Add users
 add_logs &

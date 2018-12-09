@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-## Load map/reduce queries ##
+### Load map/reduce queries ###
 LOG_DB=http://admin:admin@logging-db:5984/logs
 
 # Wait for LOG DB
@@ -31,5 +31,17 @@ for view in `ls *.js`; do
 done
 echo -e "\tDONE"
 
-## Run loop ##
+### Run loop ###
 #curl "${LOG_DB}/_design/queries/_view/bestPurchases?group=true"
+#http://admin:admin@recomm-db:5984/recomms
+
+#prodID=6
+#REV=$(curl ${DB_URL}/${prodID} | jq -r ._rev)
+
+#product_data=$(cat ./purchases.json)
+#WHAT='Content-Type: application/json'
+#SERVICE_ADDRESS=localhost
+#curl -X GET -d "${product_data}" -H "${WHAT}" ${SERVICE_ADDRESS}:1005/recomm
+
+#LOG_DB=http://admin:admin@localhost:6004/logs
+#

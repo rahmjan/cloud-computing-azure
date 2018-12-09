@@ -16,6 +16,7 @@ ENV DEBUG users-d
 
 ADD package.json .
 RUN npm install
+RUN apt-get update -y && apt-get install -y jq
 
 #
 ADD gulpfile.js .

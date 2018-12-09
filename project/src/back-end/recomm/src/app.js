@@ -9,6 +9,21 @@ const l = require('./helpers/logging')
 
 const app = express.Router()
 
+app.get('/recomm', (req, res) => {
+    var purchase_data = req.body
+
+    log(`My keys:`)
+    for(var key in purchase_data)
+    {
+        if ( key != `date` && key != `totalPrice` )
+        {
+            log(`${key}`)
+        }
+    }
+
+    log(`My keys - END`)
+})
+
 app.get('/recomm/:username/:token/:productID', (req, res) => {
     var t0 = new Date().getTime()
 
