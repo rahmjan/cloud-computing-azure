@@ -24,18 +24,13 @@ const viewDescriptor = {
         } \
       }",
 
-      "reduce": "function(key, values) { \
-        var count = 0; \
-\
-        \
-        for(var i = 0; i < values.length; i++)\
-        {\
-          \
-        }\
-        \
-        \
-        \
-        return(key, {count: count});\
+      "reduce": "function(key, vals) { \
+        var count = vals.reduce(function(a,b){\
+                    if (a.product == b.product) \
+                    {\
+                      return a.quantity + b.quantity; \
+                    }});\
+        return(key, count);\
       }"
     }
   }

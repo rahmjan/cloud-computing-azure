@@ -35,6 +35,13 @@
           "image": "test2",
           "price": 20,
           "totalPrice": 62
+        },
+        "9": {
+          "quantity": 71,
+          "name": "Hruska",
+          "image": "test2",
+          "price": 20,
+          "totalPrice": 62
         }
       }
     },
