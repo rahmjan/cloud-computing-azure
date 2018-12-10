@@ -15,7 +15,7 @@ const viewDescriptor = {
               {\
                 if ( key2 != \"date\" && key2 != \"totalPrice\" && key2 != key ) \
                 {\
-                  emit(key, {product: key2.toString(), quantity: doc.jsonData[key2].quantity}); \
+                  emit([key, key2], doc.jsonData[key2].quantity); \
                 }\
               }\
             \
@@ -25,12 +25,7 @@ const viewDescriptor = {
       }",
 
       "reduce": "function(key, vals) { \
-        var count = vals.reduce(function(a,b){\
-                    if (a.product == b.product) \
-                    {\
-                      return a.quantity + b.quantity; \
-                    }});\
-        return(key, count);\
+        return sum(vals);\
       }"
     }
   }

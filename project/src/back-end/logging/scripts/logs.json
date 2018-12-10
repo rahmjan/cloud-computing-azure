@@ -23,21 +23,21 @@
         "date": "07-06-2016 06:38:34",
         "totalPrice": 10089,
         "65": {
-          "quantity": 25,
+          "quantity": 1,
           "name": "Jablko",
           "image": "test",
           "price": 40,
           "totalPrice": 60
         },
         "8": {
-          "quantity": 71,
+          "quantity": 2,
           "name": "Hruska",
           "image": "test2",
           "price": 20,
           "totalPrice": 62
         },
         "9": {
-          "quantity": 71,
+          "quantity": 4,
           "name": "Hruska",
           "image": "test2",
           "price": 20,
@@ -49,7 +49,25 @@
       "_id": "purchase_77777777",
       "date": "2016-06-07_777777777",
       "service": "purchase",
-      "message": "Example: My 1.purchase"
+      "message": "Example: My 1.purchase",
+      "jsonData": {
+        "date": "07-06-2016 06:38:34",
+        "totalPrice": 10089,
+        "65": {
+          "quantity": 128,
+          "name": "Jablko",
+          "image": "test",
+          "price": 40,
+          "totalPrice": 60
+        },
+        "9": {
+          "quantity": 256,
+          "name": "Hruska",
+          "image": "test2",
+          "price": 20,
+          "totalPrice": 62
+        }
+      }
     }
   ]
 }
