@@ -31,7 +31,19 @@ for view in `ls *.js`; do
 done
 echo -e "\tDONE"
 
+
 ### Run loop ###
+SERVICE_ADDRESS=http://recomm:80
+WHAT='Content-Type: application/json'
+
+while true
+do
+	QUERY=$(curl "${LOG_DB}/_design/queries/_view/bestPurchases?group=true")
+	curl -X POST -d "${QUERY}" -H "${WHAT}" ${SERVICE_ADDRESS}/recomm/update
+	sleep 10
+done
+
+#######################################
 #curl "${LOG_DB}/_design/queries/_view/bestPurchases?group=true"
 #http://admin:admin@recomm-db:5984/recomms
 
@@ -45,3 +57,4 @@ echo -e "\tDONE"
 
 #LOG_DB=http://admin:admin@localhost:6004/logs
 #
+#SERVICE_ADDRESS=localhost:1005

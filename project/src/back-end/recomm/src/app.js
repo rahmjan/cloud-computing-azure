@@ -9,19 +9,40 @@ const l = require('./helpers/logging')
 
 const app = express.Router()
 
-app.get('/recomm', (req, res) => {
-    var purchase_data = req.body
+app.post('/recomm/update', (req, res) => {
+    var t0 = new Date().getTime()
 
-    log(`My keys:`)
-    for(var key in purchase_data)
-    {
-        if ( key != `date` && key != `totalPrice` )
-        {
-            log(`${key}`)
-        }
-    }
+    var data = req.body
 
-    log(`My keys - END`)
+    log(`My LOG - START`);
+    log(data);
+    log(`My LOG - END`);
+
+    res.status(200).json({
+        status: 'success',
+    })
+
+    // axios.get(`${authUrl}/user/authorization/${username}/${token}`)
+    // .then((response) => {
+    //     if (!response.data.rights.isUser) {
+    //         throw new Error(`${username} does not have authority`)
+    //     }
+    //     return dbHelpers.getRecomm(`${productID}`)
+    // })
+    // .then((recomm) => {
+    //     res.status(200).json({
+    //         status: 'success',
+    //     })
+    // })
+    // .catch((msg) => {
+    //     res.status(500).json({
+    //         status: 'error',
+    //         message: String(msg)
+    //     })
+    // })
+
+    var t1 = new Date().getTime()
+    l.serv_log("Call to update_recomm took " + (t1 - t0) + " milliseconds.")
 })
 
 app.get('/recomm/:username/:token/:productID', (req, res) => {
@@ -36,7 +57,7 @@ app.get('/recomm/:username/:token/:productID', (req, res) => {
         if (!response.data.rights.isUser) {
             throw new Error(`${username} does not have authority`)
         }
-        return dbHelpers.getRecomm(`${productID}`)
+        return dbHelpers.getRecomm(`${product}`)
     })
     .then((recomm) => {
         res.status(200).json({
