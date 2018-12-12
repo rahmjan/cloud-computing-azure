@@ -14,20 +14,20 @@ function getRecomm (product) {
   })
 }
 
-// function insertCart (cart) {
-//     return new Promise((resolve, reject) => {
-//         DB.insert(cart, cart._id, (ko, ok) => {
-//             if (ko) {
-//                 log(ko)
-//                 reject(ko.reason)
-//             }
-//             else resolve(ok)
-//         })
-//     })
-// }
+function insertRecomm (cart) {
+    return new Promise((resolve, reject) => {
+        DB.insert(cart, cart._id, (ko, ok) => {
+            if (ko) {
+                log(ko)
+                reject(ko.reason)
+            }
+            else resolve(ok)
+        })
+    })
+}
 
 
 module.exports = {
     getRecomm,
-    // insertCart
+    insertRecomm
 }

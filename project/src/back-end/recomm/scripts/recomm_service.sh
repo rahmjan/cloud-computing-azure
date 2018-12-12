@@ -40,7 +40,7 @@ while true
 do
 	QUERY=$(curl "${LOG_DB}/_design/queries/_view/bestPurchases?group=true")
 	curl -X POST -d "${QUERY}" -H "${WHAT}" ${SERVICE_ADDRESS}/recomm/update
-	sleep 10
+	sleep 3
 done
 
 #######################################
@@ -58,3 +58,6 @@ done
 #LOG_DB=http://admin:admin@localhost:6004/logs
 #
 #SERVICE_ADDRESS=localhost:1005
+
+#curl -X GET http://admin:admin@localhost:6005/recomms/_all_docs
+#curl -X DELETE http://admin:admin@localhost:6005/recomms/
