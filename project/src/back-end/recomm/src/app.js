@@ -31,36 +31,7 @@ app.post('/recomm/update', (req, res) => {
 
     for(var key in database)
     {
-        dbHelpers.getRecomm(key)
-        .then((response) => {
-            return response
-        })
-        .catch((msg) => {
-            if (msg == `missing`)
-            {
-                log(`MISSING: `+ key)
-                return database[key];
-            }
-            else { throw msg }
-        })
-        .then((response) => {
-            log(`HERE`)
-            log(response)
-
-            // if (response._rev != null)
-            // {
-            //     database[key]._rev = response._rev;
-            // }
-            //
-            // response = database[key];
-            log(response)
-            log(`HERE-END`)
-            dbHelpers.insertRecomm(response)
-            .catch((msg) => {
-                log(`ERROR: `)
-                log(`ERROR:`+ String(msg))
-            })
-        })
+        axios.post(`http://recomm:80/recomm/update2`, database[key])
     }
 
     res.status(200).json({
@@ -69,6 +40,43 @@ app.post('/recomm/update', (req, res) => {
 
     var t1 = new Date().getTime()
     l.serv_log("Call to update_recomm took " + (t1 - t0) + " milliseconds.")
+})
+
+app.post('/recomm/update2', (req, res) => {
+    var data = req.body
+
+    dbHelpers.getRecomm(`${data._id}`)
+    .then((response) => {
+        return response
+    })
+    .catch((msg) => {
+        if (msg == `missing`)
+        {
+            return data;
+        }
+        else { throw msg }
+    })
+    .then((response) => {
+        if (response._rev != null)
+        {
+            data._rev = response._rev;
+            response = data;
+        }
+
+        dbHelpers.insertRecomm(response)
+    })
+    .then((response) => {
+        res.status(200).json({
+            status: 'success',
+        })
+    })
+    .catch((msg) => {
+        log(`ERROR: `+ msg)
+        res.status(500).json({
+            status: 'error',
+            message: String(msg)
+        })
+    })
 })
 
 app.get('/recomm/:username/:token/:productID', (req, res) => {

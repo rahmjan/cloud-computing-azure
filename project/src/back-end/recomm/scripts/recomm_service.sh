@@ -35,12 +35,13 @@ echo -e "\tDONE"
 ### Run loop ###
 SERVICE_ADDRESS=http://recomm:80
 WHAT='Content-Type: application/json'
+sleep 10 # wait before start
 
 while true
 do
 	QUERY=$(curl "${LOG_DB}/_design/queries/_view/bestPurchases?group=true")
 	curl -X POST -d "${QUERY}" -H "${WHAT}" ${SERVICE_ADDRESS}/recomm/update
-	sleep 3
+	sleep 5
 done
 
 #######################################
