@@ -62,3 +62,9 @@ done
 
 #curl -X GET http://admin:admin@localhost:6005/recomms/_all_docs
 #curl -X DELETE http://admin:admin@localhost:6005/recomms/
+
+#SERVICE_ADDRESS=localhost
+#USER_NAME=admin
+#PASSWORD=admin
+#TOKEN=$(curl -X GET ${SERVICE_ADDRESS}:1000/user/${USER_NAME}/${PASSWORD} | jq -r .token)
+#curl -X GET ${SERVICE_ADDRESS}:1005/recomm/${USER_NAME}/${TOKEN}/65

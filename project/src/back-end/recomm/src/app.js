@@ -1,3 +1,5 @@
+var PriorityQueue = require('priorityqueue');
+
 const axios = require('axios');
 const authUrl = 'http://users-daemon:80'
 
@@ -79,12 +81,20 @@ app.post('/recomm/update2', (req, res) => {
     })
 })
 
+class PointInQ{
+    constructor(x, y){
+        this.product = x;
+        this.quantity = y;
+    }
+}
+
 app.get('/recomm/:username/:token/:productID', (req, res) => {
     var t0 = new Date().getTime()
 
     var username = req.params.username
     var token = req.params.token
     var product = req.params.productID
+    var queue = new PriorityQueue({ comparator: function(a, b) { return a.quantity - b.quantity; }});
 
     axios.get(`${authUrl}/user/authorization/${username}/${token}`)
     .then((response) => {
@@ -92,6 +102,26 @@ app.get('/recomm/:username/:token/:productID', (req, res) => {
             throw new Error(`${username} does not have authority`)
         }
         return dbHelpers.getRecomm(`${product}`)
+    })
+    .then((recomm)=> {
+        // Fill queue
+        for (var key in recomm) {
+            if ( key != '_rev' && key != '_id'){
+                log(`TEST1: {product: ${key}, quantity: ${recomm[key]}}`)
+                queue.push(new PointInQ(key, recomm[key]));
+            }
+        }
+
+        axios.get(`http://catalog:80/catalog`)
+        .then((catalog) => {
+        // Compare catalog and recomm
+            log(`COMPARE CATALOG AND RECOMM:`)
+            // log(recomm)
+            // log(catalog.data.catalog)
+            log(`COMPARE CATALOG AND RECOMM - END`)
+
+
+        })
     })
     .then((recomm) => {
         res.status(200).json({

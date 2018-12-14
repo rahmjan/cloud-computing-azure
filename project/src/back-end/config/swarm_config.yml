@@ -109,7 +109,7 @@ services:     # list all services for your application
   recomm:
     image: rahmjan/recomm
     build: ../recomm
-    depends_on: [ "logging-db" ]
+    depends_on: [ "recomm-db", "logging-db" ]
     ports: [ "1005:80" ]
     deploy:
       replicas: 1
