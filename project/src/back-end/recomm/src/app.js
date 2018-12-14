@@ -88,6 +88,23 @@ class PointInQ{
     }
 }
 
+function findInCatalog(value, catalog)
+{
+    for (var category in catalog)
+    {
+        if (category != _rev && category != _id)
+        {
+            for (var key in catalog[category]) {
+                if (key == value)
+                {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
 app.get('/recomm/:username/:token/:productID', (req, res) => {
     var t0 = new Date().getTime()
 
@@ -95,6 +112,7 @@ app.get('/recomm/:username/:token/:productID', (req, res) => {
     var token = req.params.token
     var product = req.params.productID
     var queue = new PriorityQueue({ comparator: function(a, b) { return a.quantity - b.quantity; }});
+    var topTree = {};
 
     axios.get(`${authUrl}/user/authorization/${username}/${token}`)
     .then((response) => {
@@ -114,19 +132,24 @@ app.get('/recomm/:username/:token/:productID', (req, res) => {
 
         axios.get(`http://catalog:80/catalog`)
         .then((catalog) => {
-        // Compare catalog and recomm
+        // Compare catalog vs recomm and shopping_cart vs recomm
             log(`COMPARE CATALOG AND RECOMM:`)
-            // log(recomm)
-            // log(catalog.data.catalog)
+            var tree = 1;
+            while (tree < 4) {
+                var inCatalog = findInCatalog(queue.peek().product, catalog);
+                if (inCatalog) {
+                    topTree[tree] = queue.pop().product;
+                    tree++;
+                }
+            }
+
             log(`COMPARE CATALOG AND RECOMM - END`)
-
-
         })
     })
-    .then((recomm) => {
+    .then(() => {
         res.status(200).json({
             status: 'success',
-            recomm
+            topTree: topTree
         })
     })
     .catch((msg) => {
