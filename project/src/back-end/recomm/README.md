@@ -1,18 +1,17 @@
-# Recommendation service - to do...
+# Recommendation service
 
-This service can manipulate with user's shopping cart. Add or delete products.  
-When it is created it will insert simple *cart* for user *admin* to the database.
-Example of *cart* you can find in file `./scripts/cart.json`
+Service for recommendation engine. 
+When it is created it will insert simple *recomm*. It is data from logging service which went through queries of recommendation service.
+Example of *recomm* you can find in file `./scripts/recomms.json`. File is in "productID: quantity" format.
 
-Port to access: `1002`  
-Port to database: `6002`
+Port to access: `1005`  
+Port to database: `6005`
 
 #### API
 | Method | Uniform Resource Name (URN) | Required  parameters | Output | Description |
 |:------:|:-----------------------------|:-------------------------------------:|:--------------------:|:--------------------------------------------------|
-| POST | /cart/:username/:token | product_id=[string] & quantity=[string] | - | Add/Update item in the cart |
-| GET | /cart/:username/:token | - | Cart | Get shopping cart |
-| DELETE | /cart/:username/:token | product_id=[string] | - | Delete item in the cart |
+| POST | /recomm/update | to do... | - |  |
+| GET | /recomm/:username/:token/:productID | - | Tree best product which you can buy together  | Get recommendation for product |
 
 #### Example
 ```
@@ -22,11 +21,5 @@ PASSWORD=admin
 TOKEN=$(curl -X GET ${SERVICE_ADDRESS}:1000/user/${USER_NAME}/${PASSWORD} | jq -r .token)
 ```
 
-Add/Update item:  
-`curl -X POST -d "product_id=8&quantity=3" ${SERVICE_ADDRESS}:1002/cart/${USER_NAME}/${TOKEN}`
-
-Get cart:  
-`curl -X GET ${SERVICE_ADDRESS}:1002/cart/${USER_NAME}/${TOKEN}`
-
-Delete item:  
-`curl -X DELETE -d "product_id=8" ${SERVICE_ADDRESS}:1002/cart/${USER_NAME}/${TOKEN}`
+Get recommendation for product with ID 8:  
+`curl -X GET ${SERVICE_ADDRESS}:1005/recomm/${USER_NAME}/${TOKEN}/8`

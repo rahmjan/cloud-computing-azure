@@ -1,0 +1,10 @@
+config:
+  target: http://node1-rahmjan.francecentral.cloudapp.azure.com:1005
+  phases:
+    - duration: 120
+      arrivalRate: 20
+
+scenarios:
+  - flow:
+    - get:
+        url: /recomm/xx/yy/zz

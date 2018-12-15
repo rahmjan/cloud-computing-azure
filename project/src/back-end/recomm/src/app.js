@@ -143,6 +143,11 @@ app.get('/recomm/:username/:token/:productID', (req, res) => {
         return axios.get(`http://catalog:80/catalog`)
         .then((catalog) => {
             return axios.get(`http://shopping_cart:80/cart/${username}/${token}`)
+            .catch(() => {
+                log(`No shopping cart`)
+                var ret = {data: {cart: {}}}
+                return ret;
+            })
             .then((cart) => {
                 log(`COMPARE CATALOG AND RECOMM:`)
                 var tree = 1;
