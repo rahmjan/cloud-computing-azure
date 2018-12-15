@@ -90,15 +90,24 @@ class PointInQ{
 
 function findInCatalog(value, catalog)
 {
-    for (var category in catalog)
-    {
-        if (category != _rev && category != _id)
-        {
+    for (var category in catalog) {
+        if (category != '_rev' && category != '_id') {
             for (var key in catalog[category]) {
-                if (key == value)
-                {
+                if (key == value) {
                     return true;
                 }
+            }
+        }
+    }
+    return false;
+}
+
+function findInShoppingCart(value, cart)
+{
+    for (var key in cart) {
+        if (key != '_rev' && key != '_id') {
+            if (key == value) {
+                return true;
             }
         }
     }
@@ -125,31 +134,45 @@ app.get('/recomm/:username/:token/:productID', (req, res) => {
         // Fill queue
         for (var key in recomm) {
             if ( key != '_rev' && key != '_id'){
-                log(`TEST1: {product: ${key}, quantity: ${recomm[key]}}`)
+                log(`Push: {product: ${key}, quantity: ${recomm[key]}}`)
                 queue.push(new PointInQ(key, recomm[key]));
             }
         }
 
-        axios.get(`http://catalog:80/catalog`)
-        .then((catalog) => {
         // Compare catalog vs recomm and shopping_cart vs recomm
-            log(`COMPARE CATALOG AND RECOMM:`)
-            var tree = 1;
-            while (tree < 4) {
-                var inCatalog = findInCatalog(queue.peek().product, catalog);
-                if (inCatalog) {
-                    topTree[tree] = queue.pop().product;
-                    tree++;
-                }
-            }
+        return axios.get(`http://catalog:80/catalog`)
+        .then((catalog) => {
+            return axios.get(`http://shopping_cart:80/cart/${username}/${token}`)
+            .then((cart) => {
+                log(`COMPARE CATALOG AND RECOMM:`)
+                var tree = 1;
+                while (tree < 4) {
+                    var inCatalog = findInCatalog(queue.peek().product, catalog.data.catalog);
+                    var inCart = findInShoppingCart(queue.peek().product, cart.data.cart);
 
-            log(`COMPARE CATALOG AND RECOMM - END`)
+                    if (inCatalog && !inCart) {
+                        log(`H1: ` + tree + ' ' + queue.peek().product)
+                        topTree[tree] = queue.peek().product;
+                        tree++;
+                    }
+                    else { log(`H2: ` + tree + ' ' + queue.peek().product) }
+
+                    queue.pop();
+                    if (queue.size() == 0){
+                        break;
+                    }
+                }
+
+                log(topTree)
+                log(`COMPARE CATALOG AND RECOMM - END`)
+                return topTree;
+            })
         })
     })
-    .then(() => {
+    .then((respTree) => {
         res.status(200).json({
             status: 'success',
-            topTree: topTree
+            topTree: respTree
         })
     })
     .catch((msg) => {
