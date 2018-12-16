@@ -9,6 +9,6 @@ docker push rahmjan/shopping_cart-db && \
 docker push rahmjan/purchase && \
 docker push rahmjan/purchase-db && \
 docker push rahmjan/logging && \
-docker push rahmjan/logging-db \
+docker push rahmjan/logging-db &&\
 docker push rahmjan/recomm && \
 docker push rahmjan/recomm-db

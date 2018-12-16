@@ -30,6 +30,7 @@ The *admin* identity for database is `admin` with password `admin`.
 - **Purchase** - Allows make purchase and store its history.
 - **Logging** - Logs almost everything that happens.
 - **Catalog** - Stores catalog of products and allows its change.
+- **Recommendation** - Stores recommendation of best sell product.
 
 For more details or API of services you can find in *README.md* file
 of their respective source folders in `./project/src/back-end/[service]`.

@@ -10,7 +10,7 @@ Port to database: `6004`
 #### API
 | Method | Uniform Resource Name (URN) | Required  parameters | Output | Description |
 |:------:|:-----------------------------|:-------------------------------------:|:--------------------:|:--------------------------------------------------|
-| POST | /log | _id=[string] & event=[string] | - | Send log |
+| POST | /log | _id=[string] & date=[date] & service=[service] & message=[string] & jsonData=[JSON] | - | Send log |
 
 
 #### Example

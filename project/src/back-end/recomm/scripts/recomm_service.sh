@@ -41,30 +41,5 @@ while true
 do
 	QUERY=$(curl "${LOG_DB}/_design/queries/_view/bestPurchases?group=true")
 	curl -X POST -d "${QUERY}" -H "${WHAT}" ${SERVICE_ADDRESS}/recomm/update
-	sleep 5
+	sleep 60
 done
-
-#######################################
-#curl "${LOG_DB}/_design/queries/_view/bestPurchases?group=true"
-#http://admin:admin@recomm-db:5984/recomms
-
-#prodID=6
-#REV=$(curl ${DB_URL}/${prodID} | jq -r ._rev)
-
-#product_data=$(cat ./purchases.json)
-#WHAT='Content-Type: application/json'
-#SERVICE_ADDRESS=localhost
-#curl -X GET -d "${product_data}" -H "${WHAT}" ${SERVICE_ADDRESS}:1005/recomm
-
-#LOG_DB=http://admin:admin@localhost:6004/logs
-#
-#SERVICE_ADDRESS=localhost:1005
-
-#curl -X GET http://admin:admin@localhost:6005/recomms/_all_docs
-#curl -X DELETE http://admin:admin@localhost:6005/recomms/
-
-#SERVICE_ADDRESS=localhost
-#USER_NAME=admin
-#PASSWORD=admin
-#TOKEN=$(curl -X GET ${SERVICE_ADDRESS}:1000/user/${USER_NAME}/${PASSWORD} | jq -r .token)
-#curl -X GET ${SERVICE_ADDRESS}:1005/recomm/${USER_NAME}/${TOKEN}/65
