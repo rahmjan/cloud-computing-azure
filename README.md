@@ -34,3 +34,6 @@ The *admin* identity for database is `admin` with password `admin`.
 
 For more details or API of services you can find in *README.md* file
 of their respective source folders in `./project/src/back-end/[service]`.
+
+#### Notes
+We did not connect the back-end with the front-end.

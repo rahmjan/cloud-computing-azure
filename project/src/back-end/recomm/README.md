@@ -7,7 +7,7 @@ Example of *recomm* you can find in file `./scripts/recomms.json`. It is data fr
 Port to access: `1005`  
 Port to database: `6005`
 
-The service periodically (every 60 seconds in `./scripts/recomm_service.sh`) update it's database of best sell products.
+The service periodically (for now for testing purpose, every 60 seconds in `./scripts/recomm_service.sh`) update it's database of best sell products.
 It provides suggestions (tree best product) based on previous purchases of all users, exclude products in user's shopping cart and employs a Map/Reduce periodic query.
 
 The Map/Reduce query, first it get the data from logging database. The data are `{[productID, PdoductID], quantity}` where the second `productID` is product which was bought together with the first `productID` in `quantity`.
