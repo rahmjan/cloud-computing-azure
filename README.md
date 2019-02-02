@@ -37,3 +37,9 @@ of their respective source folders in `./project/src/back-end/[service]`.
 
 #### Notes
 We did not connect the back-end with the front-end.
+
+<!--
+You did an excellent job in terms of development. Your scripts/test allow to deploy your application with almost no efforts for reviewers. Besides, there is no documentation in the sources that allows to understand the propose of each REST call.
+
+I may suggest to improve the way you present any project. Even if the documentation is enough to describe every service, the lack of a description in a first document do not show that you have manage to complete what was demanded.  
+-->

@@ -2,20 +2,24 @@
 Each of the configuration has it's own creation script `./create_back-end_[build_script].sh`
 and clean script `./clean_back-end_[build_script].sh`.
 
+<!--
+it is a bad practice to maintain the public/private ssh keys in any development. You could simple tell the potential readers of your report to share their a public key and then you can add it as authorized key on every VM
+-->
+
 #### Local
 The local configuration only run `docker-compose up --build` command with default `docker-compose.yml` config file.
 This file contains all the docker setting for containers deployment.
 
-The main point of this configuration is testing and developing of back-end services without worrying about connection problems. 
+The main point of this configuration is testing and developing of back-end services without worrying about connection problems.
 
 #### Local VMs
-This configuration is mean for simulation of Azure VMs in local setting. It creates local VMs 
-(the number of VM can be change in the script) and deploy them in the docker stack. 
+This configuration is mean for simulation of Azure VMs in local setting. It creates local VMs
+(the number of VM can be change in the script) and deploy them in the docker stack.
 
 Configuration file is `./swarm_config.yml`. This config also deploy Visualizer where we can check
 the status of containers. It runs on port `8080`.
 
-Unfortunately this configuration is not fully functional because we have encountered a problem where containers refuse to 
+Unfortunately this configuration is not fully functional because we have encountered a problem where containers refuse to
 communicate between VMs and also between VM and localhost. This is the reason why we decided to focus on development on Azure platform.
 
 #### Azure
@@ -35,7 +39,7 @@ This way, script can continue without interruption and deploy docker stack. Conf
 In the folder `./ssh/`, there are private and public key for ssh connection to the VMs.
 File `./azure-docker-vm.json` is template of VM which are used for creation of VM.
 
-###### Blob 
+###### Blob
 Blob configuration script (`./blob_config.sh`) will create Azure blob for storage of images.
 It will also try to upload test image *mango.jpg*.
 
@@ -48,4 +52,3 @@ it will change the number of instance of service.
 
 Scalability was tested by Artillery test tool which uses workload injection. The configuration file for
 testing can be found in `/back-end/[service_name]/tests/[name_of_test].yml`.
-
