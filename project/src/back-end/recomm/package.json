@@ -14,7 +14,7 @@
     "morgan": "~1.8.1",
     "nano": "^6.4.3",
     "pg": "^6.1.4",
-    "axios": "^0.15.3",
+    "axios": "^0.19.2",
     "priorityqueue": "^0.2.1"
   },
   "devDependencies": {
