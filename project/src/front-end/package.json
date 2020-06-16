@@ -4,7 +4,7 @@
   "description": "Front-end of a simple shopping-cart application.",
   "main": "index.js",
   "dependencies": {
-    "axios": "^0.15.3",
+    "axios": "^0.18.1",
     "react": "^15.4.4",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^15.4.4",
